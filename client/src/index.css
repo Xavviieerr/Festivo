@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/* use {*} to remove the initial margin on the main app file
+but will only be needed if using plain html */
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
