@@ -1,18 +1,8 @@
 import { useState } from "react";
+import LandingPage from "./pages/landing/LandingPage";
 
 function App() {
-  return (
-    <div className="zero">
-      <div className="font-bold">App</div>
-      <div className="one">App</div>
-      <div className="one">App</div>
-      <div className="one">App</div>
-      <div className="one">App</div>
-      <div className="one">App</div>
-      <div className="one">App</div>
-      <div className="one">App</div>
-    </div>
-  );
+  return <LandingPage />;
 }
 
 export default App;

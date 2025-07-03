@@ -1,9 +1,16 @@
 @import "tailwindcss";
 
-/* use {*} to remove the initial margin on the main app file
-but will only be needed if using plain html */
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
+@theme {
+  --color-concrete-50: #f8f8f8;
+  --color-concrete-100: #f2f2f2;
+  --color-concrete-200: #dcdcdc;
+  --color-concrete-300: #bdbdbd;
+  --color-concrete-400: #989898;
+  --color-concrete-500: #7c7c7c;
+  --color-concrete-600: #656565;
+  --color-concrete-700: #525252;
+  --color-concrete-800: #464646;
+  --color-concrete-900: #3d3d3d;
+  --color-concrete-950: #292929;
+  --color-ring-color: #f54d45;
+}
