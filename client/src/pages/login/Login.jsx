@@ -10,6 +10,7 @@ const Login = () => {
     username: "",
     email: "",
     password: "",
+    confirmpassword: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -23,33 +24,45 @@ const Login = () => {
 
   // validation function
   const validate = () => {
-    // const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    // const passwordRegex =
-    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    // declarations
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     const newErrors = {};
-    if (!formData.name) {
+
+    // username checker
+    if (!formData.username) {
       newErrors.name = "Name is required";
-    } else if (formData.name.length < 3) {
+    } else if (formData.username.length < 3) {
       newErrors.name = "Name must be at least 3 characters";
-    } else {
-      newErrors.name = "";
     }
-    // if (!emailRegex.test(formData.email)) {
-    //   newErrors.email = "Email must be in format example@email.com";
-    // }
-    // if (!passwordRegex.test(formData.password)) {
-    //   newErrors.email =
-    //     "Your password should contain UPPERCASE and special characters";
-    // }
+
+    // email checker
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Email must be in format example@email.com";
+    }
+
+    //password checker
+    if (!passwordRegex.test(formData.password)) {
+      newErrors.password =
+        "Your password should contain UPPERCASE and special characters";
+    }
+
+    //confirmpassword checker
+    if (formData.confirmpassword !== formData.password) {
+      newErrors.confirmpassword = "Password and confirmpassword must match";
+    }
     return newErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
-
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      console.log(validationErrors);
     } else {
       setErrors({});
       console.log("voila");
@@ -86,7 +99,7 @@ const Login = () => {
                 placeholder="Username"
                 className=" rounded-full pl-5 h-9 border-2 border-concrete-700 mb-3"
                 name="username"
-                value={formData.name}
+                value={formData.username}
                 onChange={handleChange}
               />
               {errors.name && (
@@ -99,7 +112,12 @@ const Login = () => {
                     placeholder="Email"
                     className=" rounded-full pl-5 h-9 border-2 border-concrete-700 mb-3"
                     name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                   />
+                  {errors.email && (
+                    <small className="text-red-600">{errors.email}</small>
+                  )}
                 </>
               ) : (
                 ""
@@ -109,16 +127,27 @@ const Login = () => {
                 placeholder="Password"
                 className=" rounded-full pl-5 h-10 border-2 border-concrete-700 mb-3"
                 name="password"
+                value={formData.password}
+                onChange={handleChange}
               />
-
+              {errors.password && (
+                <small className="text-red-600">{errors.password}</small>
+              )}
               {isSignup ? (
                 <>
                   <input
                     type="password"
                     placeholder="Confirm password"
                     className=" rounded-full pl-5 h-9 border-2 border-concrete-700 mb-3"
-                    name="confirmpass"
+                    name="confirmpassword"
+                    value={formData.confirmpassword}
+                    onChange={handleChange}
                   />
+                  {errors.confirmpassword && (
+                    <small className="text-red-600">
+                      {errors.confirmpassword}
+                    </small>
+                  )}
                 </>
               ) : (
                 ""
