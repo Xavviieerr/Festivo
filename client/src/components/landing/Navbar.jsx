@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Logo from "../../assets/logo2.png";
 
 const Navbar = () => {
@@ -8,35 +9,29 @@ const Navbar = () => {
         alt="Festivo logo"
         className="flex-shrink-0 h-20 w-20 rounded-2xl"
       />
+      <div className="quicklinks flex gap-7 items-center">
+        <a className="hover:text-ring-color" href="">
+          Home
+        </a>
+        <a className="hover:text-ring-color" href="">
+          About
+        </a>
+        <a className="hover:text-ring-color" href="">
+          How It Works
+        </a>
+        <a className="hover:text-ring-color" href="">
+          Pricing
+        </a>
+      </div>
       <div className="text-md flex items-center">
-        <div className="quicklinks flex gap-7 ">
-          <a className="hover:text-ring-color" href="">
-            Home
-          </a>
-          <a className="hover:text-ring-color" href="">
-            About
-          </a>
-          <a className="hover:text-ring-color" href="">
-            How It Works
-          </a>
-          <a className="hover:text-ring-color" href="">
-            Pricing
-          </a>
-        </div>
-        <button
-          className="border ring-2 ring-ring-color border-none border-concrete-950 
-          rounded w-30 h-10 ml-5 bg-white
-         transition ease-in hover:text-concrete-50 hover:bg-concrete-950 "
-        >
-          Login
-        </button>
-        <button
-          className="border ring-2 ring-ring-color border-none border-concrete-950
-            rounded w-30 h-10 ml-5 bg-white
-         transition ease-in hover:text-concrete-50 hover:bg-concrete-950 "
-        >
-          Sign Up
-        </button>
+        <Link to="/auth">
+          <button
+            className=" text-white text-lg bg-ring-color rounded-full w-44 h-12
+                    hover:bg-white shadow-md transition ease-in hover:text-ring-color"
+          >
+            Get Started! 🎁
+          </button>
+        </Link>
       </div>
     </div>
   );

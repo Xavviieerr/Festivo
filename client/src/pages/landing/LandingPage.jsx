@@ -3,6 +3,7 @@ import Navbar from "../../components/landing/Navbar";
 import FriendsWithpizza from "../../assets/friends-with-pizza-drinks-low-angle.jpg";
 import BucketOfChampagne from "../../assets/high-angle-bucket-with-champagne-bottle.jpg";
 import Portrait from "../../assets/portrait-young-man-party-with-champagne-bottle.jpg";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   return (
@@ -19,12 +20,14 @@ const LandingPage = () => {
               💞 Send personalized heartfelt wishes to your loved ones. From
               birthdays to big wins — make it unforgettable.🎉🥂
             </div>
-            <button
-              className="mt-10 text-white text-lg bg-ring-color rounded-full w-44 h-12
+            <Link to="/auth">
+              <button
+                className="mt-10 text-white text-lg bg-ring-color rounded-full w-44 h-12
             hover:bg-white shadow-md transition ease-in hover:text-ring-color"
-            >
-              Let`s Party 🎁
-            </button>
+              >
+                Let`s Party 🎁
+              </button>
+            </Link>
           </div>
 
           {/* side images */}

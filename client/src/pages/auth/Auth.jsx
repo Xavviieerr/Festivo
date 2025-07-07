@@ -2,10 +2,13 @@ import React, { use, useState } from "react";
 import FriendsWithpizza from "../../assets/friends-with-pizza-drinks-low-angle.jpg";
 import Logo from "../../assets/logo2.png";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
+import { Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-const Login = () => {
+const Auth = () => {
+  ///////////////////////////////////////////////////////////////////////////////
   const [isSignup, setIsSignup] = useState(true);
-
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -15,11 +18,23 @@ const Login = () => {
 
   const [errors, setErrors] = useState({});
 
+  ///////////////////////////////FUNCTIONS/////////////////////////////////////////////
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const resetForm = () => {
+    setFormData({
+      username: "",
+      email: "",
+      password: "",
+      confirmpassword: "",
+    });
+    setErrors({});
   };
 
   // validation function
@@ -60,12 +75,23 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      console.log(validationErrors);
-    } else {
+    if (!Object.keys(validationErrors).length > 0) {
       setErrors({});
-      console.log("voila");
+
+      dispatch(signUp(formData));
+      // console.log("signup");
+      // console.log(formData.username);
+      // console.log(formData.email);
+      // console.log(formData.password);
+      // console.log(formData.confirmpassword);
+    } else {
+      if (!isSignup) {
+        setErrors(validationErrors);
+        dispatch(logIn(...formData, formData.email, formData.password));
+        // console.log("login");
+        // console.log(formData.email);
+        // console.log(formData.password);
+      }
     }
   };
 
@@ -94,34 +120,33 @@ const Login = () => {
               className="flex flex-col
             "
             >
-              <input
-                type="text"
-                placeholder="Username"
-                className=" rounded-full pl-5 h-9 border-2 border-concrete-700 mb-3"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-              />
-              {errors.name && (
-                <small className="text-red-600">{errors.name}</small>
-              )}
-              {isSignup ? (
+              {isSignup && (
                 <>
                   <input
                     type="text"
-                    placeholder="Email"
+                    placeholder="Username"
                     className=" rounded-full pl-5 h-9 border-2 border-concrete-700 mb-3"
-                    name="email"
-                    value={formData.email}
+                    name="username"
+                    value={formData.username}
                     onChange={handleChange}
                   />
-                  {errors.email && (
-                    <small className="text-red-600">{errors.email}</small>
+                  {errors.name && (
+                    <small className="text-red-600">{errors.name}</small>
                   )}
                 </>
-              ) : (
-                ""
               )}
+              <input
+                type="text"
+                placeholder="Email"
+                className=" rounded-full pl-5 h-9 border-2 border-concrete-700 mb-3"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+              {errors.email && (
+                <small className="text-red-600">{errors.email}</small>
+              )}
+
               <input
                 type="password"
                 placeholder="Password"
@@ -193,7 +218,10 @@ const Login = () => {
 
             {/* to toggle between login and signup pages */}
             <div
-              onClick={() => setIsSignup((prev) => !prev)}
+              onClick={() => {
+                setIsSignup((prev) => !prev);
+                resetForm();
+              }}
               className="font-bold text-sm hover:cursor-pointer"
             >
               {isSignup ? "Already a member" : "Not a member"}{" "}
@@ -216,4 +244,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Auth;
