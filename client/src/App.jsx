@@ -8,6 +8,10 @@ function App() {
   const user = true; //will be gotten from global store using redux
   return (
     <div>
+      {/* <Routes>
+        <Route path="" element={<LandingPage />} />
+      </Routes> */}
+
       <Routes>
         <Route path="/" element={<LandingPage />} />
       </Routes>

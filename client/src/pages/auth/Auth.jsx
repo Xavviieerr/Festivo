@@ -4,6 +4,7 @@ import Logo from "../../assets/logo2.png";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { logIn, signUp } from "../../redux/actions/AuthAction";
 
 const Auth = () => {
   ///////////////////////////////////////////////////////////////////////////////
