@@ -4,7 +4,7 @@ const Users = [
   {
     username: "samson joshua",
     email: "example@email.com",
-    password: "$2b$10$d/qLwNjadLg.snNEvtwVJ.h6.yKiiWNqaJU/c0lZYRdG/v2DGR8n2",
+    password: "$2b$10$1polX4l.TCiEfX7SGFKcjOOis.fTDrqMc8JDcSHTmqJuzMTTCRcAW",
   },
 ];
 
@@ -30,6 +30,8 @@ export const registerUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
+  //there is a major issue with this login the server crashes
+  //everytime you log in
   const { email, password } = req.body;
   try {
     const valid = bcrypt.compare(password, Users.password);

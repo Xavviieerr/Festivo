@@ -9,14 +9,17 @@ const LandingPage = () => {
   return (
     <div className="flex flex-col">
       <Navbar />
-      <div className="flex flex-auto h-5/6 items-center py-25.5 text-concrete-900">
+      <div
+        className="flex flex-auto h-5/6 items-center py-25.5 text-concrete-900
+      sm:py-4"
+      >
         <div className="flex justify-center gap-18">
           {/* side text */}
           <div className="w-1/3 ">
-            <div className="font-bold text-6xl pb-3">
+            <div className="font-bold text-6xl pb-3 sm:text-2xl">
               Celebrate Every Moment, Your Way
             </div>
-            <div className="text-2xl text-ring-color">
+            <div className="text-2xl text-ring-color sm:text-sm">
               💞 Send personalized heartfelt wishes to your loved ones. From
               birthdays to big wins — make it unforgettable.🎉🥂
             </div>

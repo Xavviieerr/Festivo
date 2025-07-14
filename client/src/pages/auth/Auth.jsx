@@ -3,15 +3,16 @@ import FriendsWithpizza from "../../assets/friends-with-pizza-drinks-low-angle.j
 import Logo from "../../assets/logo2.png";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { Navigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logIn, signUp } from "../../redux/actions/AuthAction";
 
 const Auth = () => {
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.authReducer.loading);
   ///////////////////////////////////////////////////////////////////////////////
   const [isSignup, setIsSignup] = useState(true);
-  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
     confirmpassword: "",
@@ -30,7 +31,6 @@ const Auth = () => {
 
   const resetForm = () => {
     setFormData({
-      username: "",
       email: "",
       password: "",
       confirmpassword: "",
@@ -46,12 +46,12 @@ const Auth = () => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     const newErrors = {};
 
-    // username checker
-    if (!formData.username) {
-      newErrors.name = "Name is required";
-    } else if (formData.username.length < 3) {
-      newErrors.name = "Name must be at least 3 characters";
-    }
+    // // username checker
+    // if (!formData.username) {
+    //   newErrors.name = "Name is required";
+    // } else if (formData.username.length < 3) {
+    //   newErrors.name = "Name must be at least 3 characters";
+    // }
 
     // email checker
     if (!formData.email) {
@@ -78,20 +78,18 @@ const Auth = () => {
     const validationErrors = validate();
     if (!Object.keys(validationErrors).length > 0) {
       setErrors({});
-
-      dispatch(signUp(formData));
-      // console.log("signup");
-      // console.log(formData.username);
-      // console.log(formData.email);
-      // console.log(formData.password);
-      // console.log(formData.confirmpassword);
     } else {
-      if (!isSignup) {
-        setErrors(validationErrors);
-        dispatch(logIn(...formData, formData.email, formData.password));
-        // console.log("login");
-        // console.log(formData.email);
-        // console.log(formData.password);
+      setErrors(validationErrors);
+      const newFormData = {
+        email: formData.email,
+        password: formData.password,
+      };
+      if (isSignup) {
+        //dispatch(signUp(newFormData));
+        console.log(newFormData);
+      } else {
+        //dispatch(logIn(newFormData));
+        console.log(newFormData);
       }
     }
   };
@@ -99,7 +97,11 @@ const Auth = () => {
   return (
     <>
       <div className="flex h-screen w-screen">
-        <div className="w-1/2 flex items-center px-24 text-center">
+        <div
+          className="w-1/2 flex items-center px-24 text-center sm:w-full sm:px-35
+        
+        md:w-full md:px-40"
+        >
           {/* festivo`s login page logo */}
           <img
             src={Logo}
@@ -121,7 +123,7 @@ const Auth = () => {
               className="flex flex-col
             "
             >
-              {isSignup && (
+              {/* {isSignup && (
                 <>
                   <input
                     type="text"
@@ -135,7 +137,7 @@ const Auth = () => {
                     <small className="text-red-600">{errors.name}</small>
                   )}
                 </>
-              )}
+              )} */}
               <input
                 type="text"
                 placeholder="Email"
@@ -204,10 +206,12 @@ const Auth = () => {
                 className="h-12 w-12 hover:cursor-pointer
                bg-black text-concrete-300 flex justify-around items-center text-xl
                rounded-full "
+                type="button"
               >
                 <FaGoogle />
               </button>
               <button
+                type="button"
                 className="h-12 w-12 hover:cursor-pointer
                bg-black text-concrete-300 text-xl rounded-full
                flex justify-around items-center
@@ -238,7 +242,8 @@ const Auth = () => {
         <img
           src={FriendsWithpizza}
           alt="Friends celebrating with pizza and drinks"
-          className=" w-1/2 rounded-4xl my-7 object-cover mx-5 brightness-50"
+          className=" w-1/2 rounded-4xl my-7 object-cover mx-5 brightness-50 sm:hidden
+            md:hidden lg:block"
         />
       </div>
     </>
