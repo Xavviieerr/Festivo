@@ -1,28 +1,16 @@
 import bcrypt from "bcrypt";
-
-const Users = [
-  {
-    username: "samson joshua",
-    email: "example@email.com",
-    password: "$2b$10$1polX4l.TCiEfX7SGFKcjOOis.fTDrqMc8JDcSHTmqJuzMTTCRcAW",
-  },
-];
+import UserModel from "../Models/userModel.js";
 
 //registering a user
 export const registerUser = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const newUser = {
-    username: username,
-    email: email,
-    password: hashedPassword,
-  };
-
+  const newUser = new UserModel({ email, hashedPassword });
   try {
-    Users.push(newUser);
+    await newUser.save();
     res.status(200).json(newUser);
   } catch (error) {
     res.status(500).json({ message: error });
