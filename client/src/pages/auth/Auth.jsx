@@ -10,7 +10,7 @@ const Auth = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.authReducer.loading);
   ///////////////////////////////////////////////////////////////////////////////
-  const [isSignup, setIsSignup] = useState(true);
+  const [isSignup, setIsSignup] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -76,21 +76,27 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
-    if (!Object.keys(validationErrors).length > 0) {
+
+    if (
+      Object.keys(validationErrors).length === 0 ||
+      (Object.keys(validationErrors).length === 1 &&
+        validationErrors.confirmpassword !== "")
+    ) {
       setErrors({});
-    } else {
-      setErrors(validationErrors);
       const newFormData = {
         email: formData.email,
         password: formData.password,
       };
       if (isSignup) {
-        //dispatch(signUp(newFormData));
-        console.log(newFormData);
+        dispatch(signUp(newFormData));
+        console.log("Signing up:", newFormData);
       } else {
-        //dispatch(logIn(newFormData));
-        console.log(newFormData);
+        // dispatch(logIn(newFormData));
+        console.log("Logging in:", newFormData);
       }
+    } else {
+      console.log(validationErrors);
+      setErrors(validationErrors);
     }
   };
 
