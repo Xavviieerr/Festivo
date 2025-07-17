@@ -76,7 +76,6 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    toast.success("This is a toast notification!");
     const validationErrors = validate();
 
     if (
@@ -91,10 +90,8 @@ const Auth = () => {
       };
       if (isSignup) {
         dispatch(signUp(newFormData));
-        console.log("Signing up:", newFormData);
       } else {
         dispatch(logIn(newFormData));
-        console.log("Logging in:", newFormData);
       }
     } else {
       console.log(validationErrors);
