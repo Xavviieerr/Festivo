@@ -5,6 +5,7 @@ import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, signUp } from "../../redux/actions/AuthAction";
+import { toast } from "react-toastify";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -75,6 +76,7 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    toast.success("This is a toast notification!");
     const validationErrors = validate();
 
     if (
