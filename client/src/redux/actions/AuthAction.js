@@ -19,10 +19,10 @@ export const signUp = (formData) => async (dispatch) => {
   try {
     const { data } = await AuthApi.signUp(formData);
     dispatch({ type: "AUTH_SUCCESS", data: data });
-    //i think ill add the pop up notification here for error or success data.message
+    toast.success("SignUp Successful! 😊");
   } catch (error) {
     console.log(error);
     dispatch({ type: "AUTH_FAIL" });
-    //i think ill add the pop up notification here for error or success error.message
+    toast.error(error.response.data.message);
   }
 };
