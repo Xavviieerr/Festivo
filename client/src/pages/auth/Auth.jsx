@@ -91,7 +91,7 @@ const Auth = () => {
         dispatch(signUp(newFormData));
         console.log("Signing up:", newFormData);
       } else {
-        // dispatch(logIn(newFormData));
+        dispatch(logIn(newFormData));
         console.log("Logging in:", newFormData);
       }
     } else {
