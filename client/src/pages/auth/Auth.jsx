@@ -1,11 +1,9 @@
-import React, { use, useState } from "react";
+import { useState } from "react";
 import FriendsWithpizza from "../../assets/friends-with-pizza-drinks-low-angle.jpg";
 import Logo from "../../assets/logo2.png";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
-import { Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, signUp } from "../../redux/actions/AuthAction";
-import { toast } from "react-toastify";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -46,13 +44,6 @@ const Auth = () => {
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     const newErrors = {};
-
-    // // username checker
-    // if (!formData.username) {
-    //   newErrors.name = "Name is required";
-    // } else if (formData.username.length < 3) {
-    //   newErrors.name = "Name must be at least 3 characters";
-    // }
 
     // email checker
     if (!formData.email) {
@@ -128,21 +119,6 @@ const Auth = () => {
               className="flex flex-col
             "
             >
-              {/* {isSignup && (
-                <>
-                  <input
-                    type="text"
-                    placeholder="Username"
-                    className=" rounded-full pl-5 h-9 border-2 border-concrete-700 mb-3"
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                  />
-                  {errors.name && (
-                    <small className="text-red-600">{errors.name}</small>
-                  )}
-                </>
-              )} */}
               <input
                 type="text"
                 placeholder="Email"

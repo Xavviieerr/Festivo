@@ -5,7 +5,7 @@ import LandingPage from "./pages/landing/LandingPage";
 import Dashboard from "./pages/home/Dashboard";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
