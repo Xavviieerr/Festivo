@@ -26,3 +26,15 @@ export const signUp = (formData) => async (dispatch) => {
     toast.error(error.response.data.message);
   }
 };
+
+export const updateDetails = (formData, token) => async (dispatch) => {
+  try {
+    const { data } = await AuthApi.updateDetails(formData, token);
+
+    dispatch({ type: "AUTH_UPDATE_DETAILS", data: data });
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: "AUTH_UPDATE_DETAILS_FAILED" });
+  }
+};

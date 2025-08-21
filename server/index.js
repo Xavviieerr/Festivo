@@ -3,7 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose"; //not connected.
 import AuthRoute from "./Routes/AuthRoute.js";
-import CompleteInfoRoute from "./Routes/CompleteInfoRoute.js";
 import { MongoClient, ServerApiVersion } from "mongodb";
 
 //express app initialization
@@ -19,7 +18,6 @@ dotenv.config();
 
 //routes
 app.use("/auth", AuthRoute);
-app.use("/complete", CompleteInfoRoute);
 
 //Database
 const connectDB = async () => {

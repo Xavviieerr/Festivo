@@ -1,10 +1,13 @@
 import React, { useRef, useState } from "react";
 import youngManPartying from "../../assets/portrait-young-man-party-with-champagne-bottle.jpg";
 import { Form } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { updateDetails } from "../../redux/actions/AuthAction";
 
 const UserDetailsForm = () => {
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.authReducer.authData?.token);
 
   const [image, setImage] = useState(null);
   const [userInfo, setUserInfo] = useState({
@@ -33,14 +36,15 @@ const UserDetailsForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      userInfo.firstname === "" ||
-      userInfo.lastname === "" ||
-      userInfo.gender === "" ||
-      userInfo.nationality === ""
+      !(userInfo.firstname === "") ||
+      !(userInfo.lastname === "") ||
+      !(userInfo.gender === "") ||
+      !(userInfo.nationality === "")
     ) {
-      console.log("incomplete");
-    } else {
       console.log(userInfo);
+      dispatch(updateDetails(userInfo, token));
+    } else {
+      toast.error("Make sure you fill in all details.");
     }
   };
   return (

@@ -21,8 +21,9 @@ const UserSchema = mongoose.Schema(
       default: false,
     },
     profilePicture: String,
-    Nationality: String,
-    Gender: String,
+    nationality: String,
+    gender: String,
+    isProfileComplete: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
