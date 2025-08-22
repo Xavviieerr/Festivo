@@ -30,7 +30,6 @@ export const signUp = (formData) => async (dispatch) => {
 export const updateDetails = (formData, token) => async (dispatch) => {
   try {
     const { data } = await AuthApi.updateDetails(formData, token);
-
     dispatch({ type: "AUTH_UPDATE_DETAILS", data: data });
     console.log(data);
   } catch (error) {

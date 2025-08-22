@@ -14,13 +14,22 @@ const authReducer = (
       const existingProfile = JSON.parse(localStorage.getItem("store")) || {};
       const updatedProfile = {
         ...existingProfile,
-        authData: {
-          ...existingProfile.authData,
-          user: action.data?.user,
+        authReducer: {
+          ...existingProfile.authReducer,
+          authData: {
+            ...existingProfile.authReducer.authData,
+            user: action?.data.user,
+          },
         },
       };
       localStorage.setItem("store", JSON.stringify(updatedProfile));
-      return { ...state, authData: updatedProfile };
+      return {
+        ...state,
+        authData: {
+          ...state.authData,
+          user: action?.data.user,
+        },
+      };
     case "AUTH_UPDATE_DETAILS_FAILED":
       return { ...state, loading: false, error: true };
 
