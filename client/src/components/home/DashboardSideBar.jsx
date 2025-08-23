@@ -10,11 +10,11 @@ const DashboardSideBar = ({ children }) => {
   return (
     <SidebarContext.Provider value={{ expanded }}>
       <aside
-        className={`bg-red-500 transition-all ${
+        className={`shadow-[4px_0_4px_-2px_rgba(0,0,0,0.3)] transition-all ${
           expanded ? "w-[250px]" : "w-[60px]"
         }`}
       >
-        <nav className="h-full flex flex-col bg-white border-r shadow-sm">
+        <nav className="h-full flex flex-col bg-white shadow-sm">
           {/* top section logo and button */}
           <div className="p-4 pb-2 flex justify-between items-center">
             <a href="http://localhost:5173/">
@@ -39,7 +39,7 @@ const DashboardSideBar = ({ children }) => {
 
           {/* botton section */}
           <div
-            className={`border-t border-t-concrete-500 flex justify-between items-center p-3 overflow-hidden transition-all ${
+            className={`shadow-[0_-4px_4px_-2px_rgba(0,0,0,0.3)] flex justify-between items-center p-3 overflow-hidden transition-all ${
               expanded ? "w-[250px] " : "w-0 hidden"
             }`}
           >
