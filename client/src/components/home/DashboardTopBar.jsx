@@ -3,7 +3,13 @@ import Logo from "../../assets/logo2.png";
 import { useSelector } from "react-redux";
 
 const DashboardTopBar = () => {
-  const data = useSelector((state) => state.authReducer);
+  const data = useSelector((state) => state.authReducer.authData.user);
+
+  const capitalizeFirst = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   return (
     <div className="flex justify-between items-center px-10 py-2 shadow-[0_4px_4px_-2px_rgba(0,0,0,0.3)]">
       <div className="font-bold text-xl text-concrete-700">Dashboard</div>
@@ -18,9 +24,15 @@ const DashboardTopBar = () => {
 
         <div className="flex flex-col text-sm ">
           <span className="text-gray-800 leading-none text-lg font-bold">
-            John Doe
+            {data.firstname && data.lastname
+              ? `${capitalizeFirst(data.firstname)} ${capitalizeFirst(
+                  data.lastname
+                )}`
+              : "John Doe"}
           </span>
-          <span className="text-xs leading-none text-gray-600">Admin</span>
+          <span className="text-xs leading-none text-gray-600">
+            {data.admin ? "Admin" : "User"}
+          </span>
         </div>
       </div>
     </div>
