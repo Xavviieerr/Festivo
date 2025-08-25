@@ -1,14 +1,10 @@
 import React from "react";
 import Logo from "../../assets/logo2.png";
 import { useSelector } from "react-redux";
+import { capitalizeFirst } from "../../utils/capitalizeFirst";
 
 const DashboardTopBar = () => {
   const data = useSelector((state) => state.authReducer.authData.user);
-
-  const capitalizeFirst = (str) => {
-    if (!str) return "";
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
 
   return (
     <div className="flex justify-between items-center px-10 py-2 shadow-[0_4px_4px_-2px_rgba(0,0,0,0.3)]">
