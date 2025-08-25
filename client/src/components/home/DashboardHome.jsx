@@ -2,12 +2,65 @@ import React from "react";
 import { capitalizeFirst } from "../../utils/capitalizeFirst";
 import { useSelector } from "react-redux";
 import { FaCalendar, FaCalendarPlus, FaUserFriends } from "react-icons/fa";
+import { Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 const DashboardHome = () => {
   const data = useSelector((state) => state.authReducer.authData.user);
+
+  const chartData = [
+    { name: "Completed", value: 7 },
+    { name: "Pending", value: 3 },
+  ];
+
+  // Dummy data
+  const events = [
+    {
+      username: "John",
+      eventType: "Birthday",
+      date: "2025-08-23",
+      time: "09:00",
+      status: "Scheduled",
+    },
+    {
+      username: "Abdulsalam",
+      eventType: "Birthday",
+      date: "2025-08-23",
+      time: "09:00",
+      status: "Scheduled",
+    },
+    {
+      username: "John",
+      eventType: "Birthday",
+      date: "2025-08-23",
+      time: "09:00",
+      status: "Scheduled",
+    },
+    {
+      username: "John",
+      eventType: "Birthday",
+      date: "2025-08-23",
+      time: "09:00",
+      status: "Scheduled",
+    },
+    {
+      username: "John",
+      eventType: "Birthday",
+      date: "2025-08-23",
+      time: "09:00",
+      status: "Scheduled",
+    },
+    {
+      username: "John",
+      eventType: "Birthday",
+      date: "2025-08-23",
+      time: "09:00",
+      status: "Scheduled",
+    },
+  ];
+
   return (
     <div className="p-8 flex flex-col h-full gap-3">
-      <div className="flex shadow-[0_3px_7px_-1px_rgba(0,0,0,0.3)] flex-[1]  flex-col justify-center pl-5">
+      <div className="flex flex-[1]  flex-col justify-center pl-5">
         <div className="font-bold text-gray-600 text-2xl">
           {`Welcome back, ${capitalizeFirst(data.firstname)}`}{" "}
           {data.gender === "male" ? "👋" : "🌸"}
@@ -17,7 +70,7 @@ const DashboardHome = () => {
           love.
         </div>
       </div>
-      <div className="shadow-[0_3px_7px_-1px_rgba(0,0,0,0.3)] flex-[2] items-center justify-evenly flex ">
+      <div className="shadow-[0_3px_2px_-1px_rgba(0,0,0,0.3)] flex-[2] items-center justify-evenly flex ">
         <div
           className="p-6 px-5 rounded shadow-[2px_-2px_6px_-1px_rgba(0,0,0,0.3)]
          flex justify-evenly gap-7 items-center pl-2 border-b-4 border-blue-900"
@@ -68,7 +121,73 @@ const DashboardHome = () => {
           <div className="font-bold text-3xl text-yellow-700">340</div>
         </div>
       </div>
-      <div className=" shadow-[0_3px_7px_-1px_rgba(0,0,0,0.3)] flex-[4]">c</div>
+      <div className="flex-[4] flex ">
+        <div className="flex-[3] m-4 shadow-[4px_0_5px_-1px_rgba(0,0,0,0.3)]">
+          <div className="m-3 text-2xl font-medium text-gray-700 ">
+            Upcoming Events
+          </div>
+          <div className="border-t border-gray-200">
+            <ul className="max-h-50 overflow-y-auto mx-5 my-2 text-gray-500 px-3 text-sm">
+              {events.map((event, index) => (
+                <li
+                  key={index}
+                  className="p-3 grid grid-cols-6
+                   items-center rounded-b-md shadow-[0_2px_3px_-1px_rgba(0,0,0,0.4)]
+                    border-b border-r-gray-200 mb-2"
+                >
+                  <span className="font-medium">{index + 1}.</span>
+                  <span className="ml-3">{event.username}</span>
+                  <span className="text-sm text-gray-600">
+                    {event.eventType}
+                  </span>
+                  <span className="text-sm text-gray-500">{event.time}</span>
+                  <span className="text-sm text-gray-500">{event.date}</span>
+                  <span
+                    className={`px-2 py-1 text-xs rounded-full ${
+                      event.status === "Scheduled"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-green-100 text-green-700"
+                    }`}
+                  >
+                    {event.status}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="flex-[2] m-4 shadow-[4px_0_5px_-1px_rgba(0,0,0,0.3)]">
+          <div className="m-3 text-2xl font-medium text-gray-700 border-b border-gray-200 pb-2">
+            Chart
+          </div>
+          <div>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart width={400} height={400}>
+                <Pie
+                  dataKey="value"
+                  isAnimationActive={true}
+                  data={chartData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  fill="#8884d8"
+                  label
+                />
+                <Pie
+                  dataKey="value"
+                  data={chartData}
+                  cx={500}
+                  cy={200}
+                  innerRadius={40}
+                  outerRadius={80}
+                  fill="#82ca9d"
+                />
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
