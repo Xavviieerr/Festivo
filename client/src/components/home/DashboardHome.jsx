@@ -2,14 +2,15 @@ import React from "react";
 import { capitalizeFirst } from "../../utils/capitalizeFirst";
 import { useSelector } from "react-redux";
 import { FaCalendar, FaCalendarPlus, FaUserFriends } from "react-icons/fa";
-import { Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { Pie, PieChart, ResponsiveContainer, Tooltip, Cell } from "recharts";
 
 const DashboardHome = () => {
   const data = useSelector((state) => state.authReducer.authData.user);
 
-  const chartData = [
-    { name: "Completed", value: 7 },
-    { name: "Pending", value: 3 },
+  const COLORS = ["#2a573b", "#6e3a3a"];
+  const data01 = [
+    { name: "Group A", value: 400 },
+    { name: "Group B", value: 300 },
   ];
 
   // Dummy data
@@ -59,7 +60,7 @@ const DashboardHome = () => {
   ];
 
   return (
-    <div className="p-8 flex flex-col h-full gap-3">
+    <div className="p-8 flex flex-col h-full  gap-3">
       <div className="flex flex-[1]  flex-col justify-center pl-5">
         <div className="font-bold text-gray-600 text-2xl">
           {`Welcome back, ${capitalizeFirst(data.firstname)}`}{" "}
@@ -160,32 +161,27 @@ const DashboardHome = () => {
           <div className="m-3 text-2xl font-medium text-gray-700 border-b border-gray-200 pb-2">
             Chart
           </div>
-          <div>
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart width={400} height={400}>
-                <Pie
-                  dataKey="value"
-                  isAnimationActive={true}
-                  data={chartData}
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={80}
-                  fill="#8884d8"
-                  label
-                />
-                <Pie
-                  dataKey="value"
-                  data={chartData}
-                  cx={500}
-                  cy={200}
-                  innerRadius={40}
-                  outerRadius={80}
-                  fill="#82ca9d"
-                />
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
+          <ResponsiveContainer width="100%" height="80%">
+            <PieChart>
+              <Pie
+                dataKey="value"
+                isAnimationActive={true}
+                data={data01}
+                cx="50%"
+                cy="50%"
+                outerRadius={70}
+                label
+              >
+                {data01.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
         </div>
       </div>
     </div>
