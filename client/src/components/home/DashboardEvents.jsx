@@ -1,16 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const DashboardEvents = () => {
   // Dummy data
   const events = [
     {
+      id: 1,
       username: "John",
       eventType: "Birthday",
       date: "2025-08-23",
       time: "09:00",
-      status: "Scheduled",
+      status: "Completed",
     },
     {
+      id: 2,
       username: "Abdulsalam",
       eventType: "Birthday",
       date: "2025-08-23",
@@ -18,6 +21,15 @@ const DashboardEvents = () => {
       status: "Scheduled",
     },
     {
+      id: 3,
+      username: "John",
+      eventType: "Birthday",
+      date: "2025-08-23",
+      time: "09:00",
+      status: "Completed",
+    },
+    {
+      id: 4,
       username: "John",
       eventType: "Birthday",
       date: "2025-08-23",
@@ -25,20 +37,15 @@ const DashboardEvents = () => {
       status: "Scheduled",
     },
     {
+      id: 5,
       username: "John",
       eventType: "Birthday",
       date: "2025-08-23",
       time: "09:00",
-      status: "Scheduled",
+      status: "Completed",
     },
     {
-      username: "John",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-    {
+      id: 6,
       username: "John",
       eventType: "Birthday",
       date: "2025-08-23",
@@ -57,13 +64,54 @@ const DashboardEvents = () => {
               Track and manage all your scheduled well-wishes in one place.
             </span>
           </div>
-          <div className="h-auto shadow-[2px_2px_4px_0px_rgba(0,0,0,0.3)] ml-[12%] max-w-[800px]">
-            <div className="ring">a</div>
-            <div className="overflow-y-auto rounded mx-9 my-4 border border-gray-400 h-83">
-              {/* <span className="text-gray-600 font-medium p-2">
-                You do not have any event Scheduled...
-              </span> */}
-              <div className="h-12 border-b-2 border-gray-600">aa</div>
+          <div className="h-auto shadow-[2px_2px_4px_0px_rgba(0,0,0,0.3)] ">
+            <div className="border-b border-gray-400 py-3 grid grid-cols-6 px-14 mb-2 pr-47 text-medium font-bold text-gray-600">
+              <span>s/n</span>
+              <span>Name</span>
+              <span>Event Type</span>
+              <span>Time</span>
+              <span>Date</span>
+              <span>Status</span>
+            </div>
+            <div className="overflow-y-auto rounded mx-9 my-4  px-4 h-83">
+              {events[0] ? (
+                <ul>
+                  {events.map((event, index) => (
+                    <li
+                      key={events.id}
+                      className="p-3 grid grid-cols-7
+                   items-center rounded-b-md shadow-[0_2px_3px_-1px_rgba(0,0,0,0.4)]
+                    border-b border-r-gray-200 mb-2"
+                    >
+                      <span className="font-medium">{index + 1}.</span>
+                      <span className="ml-3">{event.username}</span>
+                      <span className="text-sm text-gray-600">
+                        {event.eventType}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {event.time}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {event.date}
+                      </span>
+                      <span
+                        className={`px-2 py-1 text-xs w-18 rounded-full ${
+                          event.status === "Scheduled"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-green-100 text-green-700"
+                        }`}
+                      >
+                        {event.status}
+                      </span>
+                      <button className=" px-2 py-1 w-14 border-b-2 border-l-2 border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs ">
+                        Delete
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <span>You do not have any events currently...</span>
+              )}
             </div>
           </div>
         </div>

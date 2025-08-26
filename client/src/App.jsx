@@ -38,7 +38,7 @@ function App() {
           <Route index element={<DashboardHome />} />
           <Route path="profile" element={<Profile />} />
           <Route path="events" element={<DashboardEvents />} />
-          <Route path="events/:id" element={<EventDetail />} />
+          <Route path="events/:eventsId" element={<EventDetail />} />
           <Route path="friends" element={<DashboardFriends />} />
         </Route>
       </Routes>

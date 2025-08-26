@@ -35,7 +35,7 @@ const DashboardSideBar = ({ children }) => {
           </div>
 
           {/* sidebar links passed as "children" */}
-          <ul className="flex-1 mt-4 px-3">{children}</ul>
+          <ul className="flex-1 mt-4 bg-gray-300 px-3">{children}</ul>
 
           {/* botton section */}
           <div
