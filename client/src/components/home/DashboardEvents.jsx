@@ -57,7 +57,7 @@ const DashboardEvents = () => {
               Track and manage all your scheduled well-wishes in one place.
             </span>
           </div>
-          <div className="h-auto shadow-[2px_2px_4px_0px_rgba(0,0,0,0.3)]">
+          <div className="h-auto shadow-[2px_2px_4px_0px_rgba(0,0,0,0.3)] ml-[12%] max-w-[800px]">
             <div className="ring">a</div>
             <div className="overflow-y-auto rounded mx-9 my-4 border border-gray-400 h-83">
               {/* <span className="text-gray-600 font-medium p-2">

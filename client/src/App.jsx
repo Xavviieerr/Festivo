@@ -1,6 +1,11 @@
 import Auth from "./pages/auth/Auth";
 import LandingPage from "./pages/landing/LandingPage";
 import Dashboard from "./pages/home/Dashboard";
+import DashboardHome from "./components/home/DashboardHome";
+import Profile from "./components/home/Profile";
+import DashboardEvents from "./components/home/DashboardEvents";
+import DashboardFriends from "./components/home/DashboardFriends";
+import EventDetail from "./components/home/EventDetail";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
@@ -27,9 +32,15 @@ function App() {
 
       <Routes>
         <Route
-          path="/home"
+          path="/home/*"
           element={user ? <Dashboard /> : <Navigate to="../auth" />}
-        />
+        >
+          <Route index element={<DashboardHome />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="events" element={<DashboardEvents />} />
+          <Route path="events/:id" element={<EventDetail />} />
+          <Route path="friends" element={<DashboardFriends />} />
+        </Route>
       </Routes>
       <ToastContainer />
     </div>
