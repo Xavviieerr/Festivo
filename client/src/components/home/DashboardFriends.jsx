@@ -74,61 +74,57 @@ const DashboardFriends = () => {
       <div className="main ">
         <div className="flex flex-col gap-5">
           <div className="h-auto py-5 px-2 shadow-[0_3px_2px_-1px_rgba(0,0,0,0.4)]">
-            <div className="font-bold text-4xl text-gray-700">Events</div>
+            <div className="font-bold text-4xl text-gray-700">Friends</div>
             <span className="font-medium text-gray-600 mt-3">
-              Track and manage all your scheduled well-wishes in one place.
+              View all your loved ones and schedule a personalized wish.
             </span>
           </div>
           <div className="h-auto shadow-[2px_2px_4px_0px_rgba(0,0,0,0.3)] ">
-            <div className="border-b border-gray-400 py-3 grid grid-cols-6 px-14 mb-2 pr-47 text-medium font-bold text-gray-600">
+            <div
+              className="border-b border-gray-400 py-2 pl-18 grid grid-cols-5 px-3
+             mb-2 pr-54 text-medium font-bold text-gray-600 "
+            >
               <span>s/n</span>
+              <span>Image</span>
               <span>Name</span>
-              <span>Event Type</span>
-              <span>Time</span>
-              <span>Date</span>
-              <span>Status</span>
+              <span>Relationship</span>
+              <span>email</span>
             </div>
             <div className="overflow-y-auto rounded mx-9 my-4  px-4 h-83">
-              {events[0] ? (
+              {friends[0] ? (
                 <ul>
-                  {events.map((event, index) => (
-                    <Link key={event.id} to={`/home/events/${event.id}`}>
-                      <li
-                        key={event.id}
-                        className="p-3 grid grid-cols-7
+                  {friends.map((friend, index) => (
+                    <li
+                      key={friend.id}
+                      className="p-3 grid grid-cols-6
                      items-center rounded-b-md shadow-[0_2px_3px_-1px_rgba(0,0,0,0.4)]
-                      border-b border-r-gray-200 mb-2"
+                      border-b border-r-gray-200 mb-2 mr-0"
+                    >
+                      <span className="font-medium">{index + 1}.</span>
+                      <span className="ml-3 text-sm text-gray-700 text-medium">
+                        <img
+                          src={friend.avatar}
+                          alt=""
+                          className="h-10 w-10 rounded-lg"
+                        />
+                      </span>
+                      <span className="text-sm text-gray-600">
+                        {friend.name}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {friend.relationship}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {friend.email}
+                      </span>
+
+                      <button
+                        className=" px-2 py-1 w-14 border-b-2 border-l-2 ml-16
+                      border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
                       >
-                        <span className="font-medium">{index + 1}.</span>
-                        <span className="ml-3 text-sm text-gray-700 text-medium">
-                          {event.username}
-                        </span>
-                        <span className="text-sm text-gray-600">
-                          {event.eventType}
-                        </span>
-                        <span className="text-sm text-gray-500">
-                          {event.time}
-                        </span>
-                        <span className="text-sm text-gray-500">
-                          {event.date}
-                        </span>
-                        <span
-                          className={`px-2 py-1 text-xs w-18 rounded-full ${
-                            event.status === "Scheduled"
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-green-100 text-green-700"
-                          }`}
-                        >
-                          {event.status}
-                        </span>
-                        <button
-                          onClick={() => handleDelete(event.id)}
-                          className=" px-2 py-1 w-14 border-b-2 border-l-2 border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
-                        >
-                          Delete
-                        </button>
-                      </li>
-                    </Link>
+                        Delete
+                      </button>
+                    </li>
                   ))}
                 </ul>
               ) : (
