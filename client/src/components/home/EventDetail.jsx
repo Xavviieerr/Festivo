@@ -50,6 +50,45 @@ const EventDetail = () => {
       status: "Scheduled",
     },
   ];
+  const [formData, setFormData] = useState({
+      status: "",
+      date: "",
+      time: "",
+      eventType: "",
+    });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    Object.entries(formData).forEach(([key, value]) => {
+      if (!value.trim()) {
+        newErrors[key] = "This field is required";
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log("Event created:", formData);
+      alert("✅ Event created successfully!");
+    }
+  };
+
+  
   const handleDelete = () => {
     alert("boy");
   };
@@ -141,19 +180,67 @@ const EventDetail = () => {
             >
               <div className="bg-white p-6 rounded shadow-lg">
                 <h2 className="text-lg font-bold">New Event</h2>
-                <form>
-                  <input
-                    type="text"
-                    placeholder="Event Name"
-                    className="border p-2"
-                  />
-                  <button
-                    type="submit"
-                    className="bg-blue-500 text-white p-2 ml-2"
-                  >
-                    Save
-                  </button>
-                </form>
+                <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto p-4 border rounded">
+      <div>
+        <label className="block mb-1">Status</label>
+        <select
+          name="status"
+          value={formData.status}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+        >
+          <option value="">-- Select Status --</option>
+          <option value="pending">Pending</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        {errors.status && <p className="text-red-500 text-sm">{errors.status}</p>}
+      </div>
+
+      <div>
+        <label className="block mb-1">Date</label>
+        <input
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+        />
+        {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
+      </div>
+
+      <div>
+        <label className="block mb-1">Time</label>
+        <input
+          type="time"
+          name="time"
+          value={formData.time}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+        />
+        {errors.time && <p className="text-red-500 text-sm">{errors.time}</p>}
+      </div>
+
+      <div>
+        <label className="block mb-1">Event Type</label>
+        <input
+          type="text"
+          name="eventType"
+          placeholder="e.g. Birthday, Meeting..."
+          value={formData.eventType}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+        />
+        {errors.eventType && <p className="text-red-500 text-sm">{errors.eventType}</p>}
+      </div>
+
+      <button
+        type="submit"
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        Create Event
+      </button>
+    </form>
                 <button
                   onClick={() => setOpen(false)}
                   className="mt-3 text-red-500"
