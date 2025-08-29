@@ -5,6 +5,7 @@ import DashboardHome from "./components/home/DashboardHome";
 import Profile from "./components/home/Profile";
 import DashboardEvents from "./components/home/DashboardEvents";
 import DashboardFriends from "./components/home/DashboardFriends";
+import AddFriend from "./components/home/AddFriend";
 import EventDetail from "./components/home/EventDetail";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -40,6 +41,7 @@ function App() {
           <Route path="events" element={<DashboardEvents />} />
           <Route path="events/:eventsId" element={<EventDetail />} />
           <Route path="friends" element={<DashboardFriends />} />
+          <Route path="newfriend" element={<AddFriend />} />
         </Route>
       </Routes>
       <ToastContainer />

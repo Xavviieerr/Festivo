@@ -14,7 +14,7 @@ const DashboardSideBar = ({ children }) => {
           expanded ? "w-[250px]" : "w-[60px]"
         }`}
       >
-        <nav className="h-full flex flex-col bg-white shadow-sm">
+        <nav className="h-full bg-gray-50 flex flex-col  shadow-sm">
           {/* top section logo and button */}
           <div className="p-4 pb-2 flex justify-between items-center">
             <a href="http://localhost:5173/">
@@ -35,7 +35,7 @@ const DashboardSideBar = ({ children }) => {
           </div>
 
           {/* sidebar links passed as "children" */}
-          <ul className="flex-1 mt-4 bg-gray-300 px-3">{children}</ul>
+          <ul className="flex-1 mt-4 px-3">{children}</ul>
 
           {/* botton section */}
           <div

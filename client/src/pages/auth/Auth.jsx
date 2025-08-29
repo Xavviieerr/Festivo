@@ -8,7 +8,7 @@ import { logIn, signUp } from "../../redux/actions/AuthAction";
 const Auth = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.authReducer.loading);
-  /////////////////////////////////////////////////////////////////
+
   const [isSignup, setIsSignup] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -18,8 +18,6 @@ const Auth = () => {
   });
 
   const [errors, setErrors] = useState({});
-
-  ///////////////////////////////FUNCTIONS/////////////////////////
 
   const handleChange = (e) => {
     setFormData({
