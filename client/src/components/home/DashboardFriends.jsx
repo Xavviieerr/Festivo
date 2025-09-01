@@ -1,7 +1,17 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { fetchFriends } from "../../redux/slice/friendSlice";
+import { useEffect } from "react";
 
 const DashboardFriends = () => {
+  const token = useSelector((state) => state.authReducer.authData.token);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFriends(token));
+  }, [dispatch, token]);
+
   const friends = [
     {
       id: "f1a2b3c4-0001-11ea-9f11-0a1234567890",

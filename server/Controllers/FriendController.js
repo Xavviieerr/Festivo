@@ -25,3 +25,7 @@ export const addFriend = async (req, res) => {
   }
   res.status(200).json("working");
 };
+
+export const allFriends = async (req, res) => {
+  res.status(200).json("all users");
+};

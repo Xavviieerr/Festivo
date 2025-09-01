@@ -22,16 +22,12 @@ export const addFriend = createAsyncThunk(
 //fetch friend functions
 export const fetchFriends = createAsyncThunk(
   "firends/fetchFriends",
-  async (friendData, token) => {
-    const response = await axios.get(
-      `${baseURL}/friend/allfriends`,
-      friendData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (token) => {
+    const response = await axios.get(`${baseURL}/friend/allfriends`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   }
 );
