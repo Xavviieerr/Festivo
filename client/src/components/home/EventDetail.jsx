@@ -51,7 +51,6 @@ const EventDetail = () => {
     },
   ];
   const [formData, setFormData] = useState({
-      status: "",
       date: "",
       time: "",
       eventType: "",
@@ -83,6 +82,12 @@ const EventDetail = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
+      setOpen(false)
+      setFormData({
+         date: "",
+      time: "",
+      eventType: "",
+      })
       console.log("Event created:", formData);
       alert("✅ Event created successfully!");
     }
@@ -173,30 +178,19 @@ const EventDetail = () => {
               )}
             </div>
           </div>
+
+          {/* create event pop up modal */}
           {open && (
             <div
-              onClick={() => setOpen(false)}
+              
               className="fixed inset-0 flex items-center justify-center bg-black/50"
             >
               <div className="bg-white p-6 rounded shadow-lg">
                 <h2 className="text-lg font-bold">New Event</h2>
-                <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto p-4 border rounded">
-      <div>
-        <label className="block mb-1">Status</label>
-        <select
-          name="status"
-          value={formData.status}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        >
-          <option value="">-- Select Status --</option>
-          <option value="pending">Pending</option>
-          <option value="completed">Completed</option>
-          <option value="cancelled">Cancelled</option>
-        </select>
-        {errors.status && <p className="text-red-500 text-sm">{errors.status}</p>}
-      </div>
 
+                {/* form */}
+<form onSubmit={handleSubmit} className="space-y-4 z-[10000] max-w-md mx-auto p-4 border rounded">
+      
       <div>
         <label className="block mb-1">Date</label>
         <input
@@ -240,10 +234,13 @@ const EventDetail = () => {
       >
         Create Event
       </button>
-    </form>
+</form>
+
+
+                {/* submit pop up form */}
                 <button
                   onClick={() => setOpen(false)}
-                  className="mt-3 text-red-500"
+                  className="mt-3 text-red-500 bg-red"
                 >
                   Close
                 </button>

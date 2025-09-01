@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import mongoose from "mongoose"; //not connected.
+import mongoose from "mongoose";
 import AuthRoute from "./Routes/AuthRoute.js";
+import FriendRoute from "./Routes/FriendRoute.js";
 import { MongoClient, ServerApiVersion } from "mongodb";
 
 //express app initialization
@@ -18,14 +19,16 @@ dotenv.config();
 
 //routes
 app.use("/auth", AuthRoute);
+app.use("/friend", FriendRoute);
 
+// , {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     }
 //Database
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_DB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGO_DB_URL);
     console.log("MongoDB connected");
   } catch (error) {
     console.error("MongoDB connection error:", error.message);

@@ -12,7 +12,7 @@ export const registerUser = async (req, res) => {
   try {
     const oldUser = await UserModel.findOne({ email });
     if (oldUser) {
-      res.status(400).json({ message: "Email is already Rrgistered!" });
+      res.status(400).json({ message: "Email is already Registered!" });
     }
     const user = await newUser.save();
     const token = jwt.sign(
