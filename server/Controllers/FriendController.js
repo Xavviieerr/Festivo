@@ -4,15 +4,18 @@ export const addFriend = async (req, res) => {
   const user = req.user;
   const userFriend = req.body;
 
-  const userInstance = new FriendModel(userFriend);
+  const userInstance = new FriendModel({ ...userFriend, friendId: user.id });
   try {
     const alreadyRegistered = await FriendModel.findOne({
       email: userFriend.email,
     });
 
     if (alreadyRegistered) {
-      res.status(400).json({ message: "You have a friend with this email." });
+      return res
+        .status(400)
+        .json({ message: "You have a friend with this email." });
     }
+
     const registeredUser = await userInstance.save();
 
     if (registeredUser) {
@@ -27,5 +30,19 @@ export const addFriend = async (req, res) => {
 };
 
 export const allFriends = async (req, res) => {
-  res.status(200).json("all users");
+  const user = req.user;
+  try {
+    const friends = await FriendModel.find({ friendId: user.id }).sort({
+      createdAt: -1,
+    });
+
+    if (friends.length === 0) {
+      return res.status(404).json({ message: "No friends found." });
+    }
+
+    return res.status(200).json(friends);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json("Internal server error");
+  }
 };

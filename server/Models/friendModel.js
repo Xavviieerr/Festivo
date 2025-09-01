@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const FriendSchema = mongoose.Schema(
   {
+    friendId: { type: String, required: true },
     firstname: { type: String, required: true },
     lastname: { type: String, requires: true },
     email: { type: String, lowercase: true, trim: true },

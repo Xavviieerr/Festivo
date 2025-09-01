@@ -11,7 +11,7 @@ const AddFriend = () => {
     lastname: "ahmed",
     nickname: "salam",
     relationship: "friend",
-    email: "example4@email.com",
+    email: "example8@email.com",
     tone: "humor",
     humor: "tine",
     length: "long",

@@ -4,6 +4,6 @@ import { authenticateToken } from "../middleware/auth.js";
 const router = express.Router();
 
 router.post("/newfriend", authenticateToken, addFriend);
-router.get("/allfriends", allFriends);
+router.get("/allfriends", authenticateToken, allFriends);
 
 export default router;
