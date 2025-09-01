@@ -3,8 +3,8 @@ import FriendModel from "../Models/friendModel.js";
 export const addFriend = async (req, res) => {
   const user = req.user;
   const userFriend = req.body;
-  const userInstance = new FriendModel(userFriend);
 
+  const userInstance = new FriendModel(userFriend);
   try {
     const alreadyRegistered = await FriendModel.findOne({
       email: userFriend.email,
@@ -19,6 +19,8 @@ export const addFriend = async (req, res) => {
       return res.status(200).json({ registeredUser });
     }
   } catch (error) {
+    console.log(error);
+
     return res.status(500).json("Internal Server Error!");
   }
   res.status(200).json("working");

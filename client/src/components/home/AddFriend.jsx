@@ -1,27 +1,32 @@
 import React, { useState } from "react";
+import { addFriend } from "../../redux/slice/friendSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddFriend = () => {
+  const token = useSelector((state) => state.authReducer.authData.token);
+
+  const dispatch = useDispatch();
   const [newFriendData, setNewFriendData] = useState({
-    firstname: "",
-    lastname: "",
-    nickname: "",
-    relationship: "",
-    email: "",
-    tone: "",
-    humor: "",
-    length: "",
-    emojis: "",
-    language: "",
-    saying: "",
-    hobby: "",
-    movieBook: "",
-    food: "",
-    sport: "",
-    personality: "",
-    messageStyle: "",
-    oneWord: "",
-    values: "",
-    insideJoke: "",
+    firstname: "lawal",
+    lastname: "ahmed",
+    nickname: "salam",
+    relationship: "friend",
+    email: "example4@email.com",
+    tone: "humor",
+    humor: "tine",
+    length: "long",
+    emojis: "yes",
+    language: "japan",
+    saying: "food",
+    hobby: "milk",
+    movieBook: "book",
+    food: "ona",
+    sport: "book",
+    personality: "trait",
+    messageStyle: "none",
+    oneWord: "go",
+    values: "hmm",
+    insideJoke: "okay",
   });
 
   const [errors, setErrors] = useState({});
@@ -47,8 +52,7 @@ const AddFriend = () => {
     setErrors({});
     if (!validateForm()) return;
 
-    //call an action to create friend
-    alert("submitted");
+    dispatch(addFriend({ newFriendData, token }));
   };
 
   const handleChange = (e) => {
