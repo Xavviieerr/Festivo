@@ -6,13 +6,15 @@ import { useEffect } from "react";
 
 const DashboardFriends = () => {
   const token = useSelector((state) => state.authReducer.authData.token);
+  const friends = useSelector((state) => state.friendSlice.items);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchFriends(token));
   }, [dispatch, token]);
 
-  const friends = [
+  const friendsl = [
     {
       id: "f1a2b3c4-0001-11ea-9f11-0a1234567890",
       name: "John Doe",
@@ -117,41 +119,48 @@ const DashboardFriends = () => {
             <div className="overflow-y-auto rounded mx-9 my-4  px-4 h-83">
               {friends[0] ? (
                 <ul>
-                  {friends.map((friend, index) => (
-                    <Link key={friend.id} to={`/home/events/${friend.id}`}>
-                      <li
-                        key={friend.id}
-                        className="p-3 grid grid-cols-6
+                  {friends
+                    .slice()
+                    .reverse()
+                    .map((friend, index) => (
+                      <Link
+                        key={friend.registeredUser._id}
+                        to={`/home/events/${friend.registeredUser._id}`}
+                      >
+                        <li
+                          key={friend.registeredUser._id}
+                          className="p-3 grid grid-cols-6
                      items-center rounded-b-md shadow-[0_2px_3px_-1px_rgba(0,0,0,0.4)]
                       border-b border-r-gray-200 mb-2 mr-0"
-                      >
-                        <span className="font-medium">{index + 1}.</span>
-                        <span className="ml-3 text-sm text-gray-700 text-medium">
-                          <img
-                            src={friend.avatar}
-                            alt=""
-                            className="h-10 w-10 rounded-lg"
-                          />
-                        </span>
-                        <span className="text-sm text-gray-600">
-                          {friend.name}
-                        </span>
-                        <span className="text-sm text-gray-500">
-                          {friend.relationship}
-                        </span>
-                        <span className="text-sm text-gray-500">
-                          {friend.email}
-                        </span>
-
-                        <button
-                          className=" px-2 py-1 w-14 border-b-2 border-l-2 ml-16
-                      border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
                         >
-                          Delete
-                        </button>
-                      </li>
-                    </Link>
-                  ))}
+                          <span className="font-medium">{index + 1}.</span>
+                          <span className="ml-3 text-sm text-gray-700 text-medium">
+                            <img
+                              src="null"
+                              alt=""
+                              className="h-10 w-10 rounded-lg"
+                            />
+                          </span>
+                          <span className="text-sm text-gray-600">
+                            {friend.registeredUser.lastname}{" "}
+                            {friend.registeredUser.firstname}
+                          </span>
+                          <span className="text-sm text-gray-500">
+                            {friend.registeredUser.relationship}
+                          </span>
+                          <span className="text-sm text-gray-500">
+                            {friend.registeredUser.email}
+                          </span>
+
+                          <button
+                            className=" px-2 py-1 w-14 border-b-2 border-l-2 ml-16
+                      border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
+                          >
+                            Delete
+                          </button>
+                        </li>
+                      </Link>
+                    ))}
                 </ul>
               ) : (
                 <span>You do not have any events currently...</span>
