@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import AuthRoute from "./Routes/AuthRoute.js";
 import FriendRoute from "./Routes/FriendRoute.js";
+import EventRoute from "./Routes/EventRoute.js";
 import { MongoClient, ServerApiVersion } from "mongodb";
 
 //express app initialization
@@ -20,6 +21,7 @@ dotenv.config();
 //routes
 app.use("/auth", AuthRoute);
 app.use("/friend", FriendRoute);
+app.use("/event", EventRoute);
 
 // , {
 //       useNewUrlParser: true,

@@ -51,10 +51,9 @@ const EventDetail = () => {
     },
   ];
   const [formData, setFormData] = useState({
-      date: "",
-      time: "",
-      eventType: "",
-    });
+    datetime: "",
+    eventType: "",
+  });
 
   const [errors, setErrors] = useState({});
 
@@ -82,18 +81,16 @@ const EventDetail = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      setOpen(false)
+      setOpen(false);
       setFormData({
-         date: "",
-      time: "",
-      eventType: "",
-      })
+        datetime: "",
+        eventType: "",
+      });
       console.log("Event created:", formData);
       alert("✅ Event created successfully!");
     }
   };
 
-  
   const handleDelete = () => {
     alert("boy");
   };
@@ -181,63 +178,54 @@ const EventDetail = () => {
 
           {/* create event pop up modal */}
           {open && (
-            <div
-              
-              className="fixed inset-0 flex items-center justify-center bg-black/50"
-            >
+            <div className="fixed inset-0 flex items-center justify-center bg-black/50">
               <div className="bg-white p-6 rounded shadow-lg">
                 <h2 className="text-lg font-bold">New Event</h2>
 
                 {/* form */}
-<form onSubmit={handleSubmit} className="space-y-4 z-[10000] max-w-md mx-auto p-4 border rounded">
-      
-      <div>
-        <label className="block mb-1">Date</label>
-        <input
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
-        {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
-      </div>
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-4 z-[10000] max-w-md mx-auto p-4 border rounded"
+                >
+                  {/* time and date */}
+                  <div>
+                    <label className="block mb-1">Date and Time</label>
+                    <input
+                      type="datetime-local"
+                      name="datetime"
+                      value={formData.datetime}
+                      onChange={handleChange}
+                      className="w-full border p-2 rounded"
+                    />
+                    {errors.time && (
+                      <p className="text-red-500 text-sm">{errors.datetime}</p>
+                    )}
+                  </div>
+                  {/* event type */}
+                  <div>
+                    <label className="block mb-1">Event Type</label>
+                    <input
+                      type="text"
+                      name="eventType"
+                      placeholder="e.g. Birthday, Meeting..."
+                      value={formData.eventType}
+                      onChange={handleChange}
+                      className="w-full border p-2 rounded"
+                    />
+                    {errors.eventType && (
+                      <p className="text-red-500 text-sm">{errors.eventType}</p>
+                    )}
+                  </div>
+                  {/* submit button */}
+                  <button
+                    type="submit"
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  >
+                    Create Event
+                  </button>
+                </form>
 
-      <div>
-        <label className="block mb-1">Time</label>
-        <input
-          type="time"
-          name="time"
-          value={formData.time}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
-        {errors.time && <p className="text-red-500 text-sm">{errors.time}</p>}
-      </div>
-
-      <div>
-        <label className="block mb-1">Event Type</label>
-        <input
-          type="text"
-          name="eventType"
-          placeholder="e.g. Birthday, Meeting..."
-          value={formData.eventType}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
-        {errors.eventType && <p className="text-red-500 text-sm">{errors.eventType}</p>}
-      </div>
-
-      <button
-        type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
-        Create Event
-      </button>
-</form>
-
-
-                {/* submit pop up form */}
+                {/* submit pop up button */}
                 <button
                   onClick={() => setOpen(false)}
                   className="mt-3 text-red-500 bg-red"

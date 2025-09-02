@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchFriends } from "../../redux/slice/friendSlice";
 import { useEffect } from "react";
+import { deleteFriend } from "../../redux/slice/friendSlice";
 
 const DashboardFriends = () => {
   const token = useSelector((state) => state.authReducer.authData.token);
@@ -14,74 +15,9 @@ const DashboardFriends = () => {
     dispatch(fetchFriends(token));
   }, [dispatch, token]);
 
-  const friendsl = [
-    {
-      id: "f1a2b3c4-0001-11ea-9f11-0a1234567890",
-      name: "John Doe",
-      username: "john.doe",
-      email: "john.doe@example.com",
-      phone: "+2348012345678",
-      avatar: "https://i.pravatar.cc/150?u=john.doe",
-      timezone: "Africa/Lagos",
-      relationship: "Friend",
-      notes: "Loves football and spicy food",
-    },
-    {
-      id: "f1a2b3c4-0002-11ea-9f11-0a1234567890",
-      name: "Abdulsalam Umar",
-      username: "abdulsalam",
-      email: "abdulsalam@example.com",
-      phone: "+2348023456789",
-      avatar: "https://i.pravatar.cc/150?u=abdulsalam",
-      timezone: "Africa/Lagos",
-      relationship: "Colleague",
-      notes: "Works remote, prefers morning messages",
-    },
-    {
-      id: "f1a2b3c4-0003-11ea-9f11-0a1234567890",
-      name: "Mary Johnson",
-      username: "mary.j",
-      email: "mary.j@example.com",
-      phone: "+1-202-555-0146",
-      avatar: "https://i.pravatar.cc/150?u=mary.j",
-      timezone: "America/New_York",
-      relationship: "Friend",
-      notes: "Use cheerful messages, likes emojis",
-    },
-    {
-      id: "f1a2b3c4-0004-11ea-9f11-0a1234567890",
-      name: "Paul Okoye",
-      username: "paul.ok",
-      email: "paul.ok@example.com",
-      phone: "+44-7700-900123",
-      avatar: "https://i.pravatar.cc/150?u=paul.ok",
-      timezone: "Europe/London",
-      relationship: "Family",
-      notes: "Send formal wishes for anniversaries",
-    },
-    {
-      id: "f1a2b3c4-0005-11ea-9f11-0a1234567890",
-      name: "Lisa Chen",
-      username: "lisa.c",
-      email: "lisa.c@example.com",
-      phone: "+852-9123-4567",
-      avatar: "https://i.pravatar.cc/150?u=lisa.c",
-      timezone: "Asia/Hong_Kong",
-      relationship: "Friend",
-      notes: "Prefers short messages in the morning",
-    },
-    {
-      id: "f1a2b3c4-0006-11ea-9f11-0a1234567890",
-      name: "James Mwangi",
-      username: "james.m",
-      email: "james.m@example.com",
-      phone: "+254-712-345678",
-      avatar: "https://i.pravatar.cc/150?u=james.m",
-      timezone: "Africa/Nairobi",
-      relationship: "Friend",
-      notes: "Birthday on December 5th",
-    },
-  ];
+  const handleDelete = (friendId) => {
+    dispatch(deleteFriend({ token, friendId }));
+  };
   return (
     <div className="p-10">
       <div className="main ">
@@ -118,52 +54,53 @@ const DashboardFriends = () => {
             </div>
             <div className="overflow-y-auto rounded mx-9 my-4  px-4 h-83">
               {friends[0] ? (
-                <ul>
+                <ul className="">
                   {friends
                     .slice()
                     .reverse()
                     .map((friend, index) => (
-                      <Link
-                        key={friend.registeredUser._id}
-                        to={`/home/events/${friend.registeredUser._id}`}
-                      >
-                        <li
-                          key={friend.registeredUser._id}
-                          className="p-3 grid grid-cols-6
+                      <div className="flex gap-4 pr-10">
+                        <Link
+                          key={friend._id}
+                          to={`/home/events/${friend._id}`}
+                        >
+                          <li
+                            key={friend._id}
+                            className="p-3 grid grid-cols-6
                      items-center rounded-b-md shadow-[0_2px_3px_-1px_rgba(0,0,0,0.4)]
                       border-b border-r-gray-200 mb-2 mr-0"
-                        >
-                          <span className="font-medium">{index + 1}.</span>
-                          <span className="ml-3 text-sm text-gray-700 text-medium">
-                            <img
-                              src="null"
-                              alt=""
-                              className="h-10 w-10 rounded-lg"
-                            />
-                          </span>
-                          <span className="text-sm text-gray-600">
-                            {friend.registeredUser.lastname}{" "}
-                            {friend.registeredUser.firstname}
-                          </span>
-                          <span className="text-sm text-gray-500">
-                            {friend.registeredUser.relationship}
-                          </span>
-                          <span className="text-sm text-gray-500">
-                            {friend.registeredUser.email}
-                          </span>
-
-                          <button
-                            className=" px-2 py-1 w-14 border-b-2 border-l-2 ml-16
-                      border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
                           >
-                            Delete
-                          </button>
-                        </li>
-                      </Link>
+                            <span className="font-medium">{index + 1}.</span>
+                            <span className="ml-3 text-sm text-gray-700 text-medium">
+                              <img
+                                src="null"
+                                alt=""
+                                className="h-10 w-10 rounded-lg"
+                              />
+                            </span>
+                            <span className="text-sm text-gray-600">
+                              {friend.lastname} {friend.firstname}
+                            </span>
+                            <span className="text-sm text-gray-500">
+                              {friend.relationship}
+                            </span>
+                            <span className="text-sm text-gray-500">
+                              {friend.email}
+                            </span>
+                          </li>
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(friend._id)}
+                          className=" px-2 py-1 w-14 border-b-2 border-l-2 mb-4 mt-5
+                      border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
+                        >
+                          Delete
+                        </button>
+                      </div>
                     ))}
                 </ul>
               ) : (
-                <span>You do not have any events currently...</span>
+                <span>You do not have any friends currently...</span>
               )}
             </div>
           </div>

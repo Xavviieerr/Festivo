@@ -11,7 +11,7 @@ const AddFriend = () => {
     lastname: "ahmed",
     nickname: "salam",
     relationship: "friend",
-    email: "example11@email.com",
+    email: "example6@email.com",
     tone: "humor",
     humor: "tine",
     length: "long",
@@ -51,8 +51,8 @@ const AddFriend = () => {
     e.preventDefault();
     setErrors({});
     if (!validateForm()) return;
-
     dispatch(addFriend({ newFriendData, token }));
+    <Navigate to={`/home/friends`} />;
   };
 
   const handleChange = (e) => {
