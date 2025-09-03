@@ -7,11 +7,11 @@ const AddFriend = () => {
 
   const dispatch = useDispatch();
   const [newFriendData, setNewFriendData] = useState({
-    firstname: "lawal",
-    lastname: "ahmed",
-    nickname: "salam",
+    firstname: "friday",
+    lastname: "bola",
+    nickname: "faani",
     relationship: "friend",
-    email: "example6@email.com",
+    email: "bolafan@gmail.com",
     tone: "humor",
     humor: "tine",
     length: "long",

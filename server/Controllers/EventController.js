@@ -55,25 +55,19 @@ export const allEvents = async (req, res) => {
 };
 
 export const deleteEvent = async (req, res) => {
-  return res.status(200).json("delete event");
-};
+  const eventId = req.params.id;
 
-export const userEvent = async (req, res) => {
-  const userId = req.user.id;
-  const friendId = req.params.id;
   try {
-    const response = await EventModel.find({
-      userId: userId,
-      friendId: friendId,
-    });
-
-    if (!response) {
-      return res.status(404).json("No Events Found!");
+    if (!mongoose.Types.ObjectId.isValid(eventId)) {
+      return res.status(400).json({ error: "Invalid event ID" });
     }
-
-    return res.status(200).json(response);
+    const deletedEvent = await EventModel.findByIdAndDelete(eventId);
+    if (!deletedEvent) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    return res.json(deletedEvent);
   } catch (error) {
     console.log(error);
-    return res.status(500).json("Internal Server Error!");
+    return res.status(500).json("Internal Server Error");
   }
 };

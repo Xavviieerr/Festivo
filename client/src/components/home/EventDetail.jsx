@@ -6,6 +6,7 @@ import { formatDate } from "../../utils/dateFormatter";
 import { formatTime } from "../../utils/timeFormatter";
 import { capitalizeFirst } from "../../utils/capitalizeFirst";
 import { addEvents } from "../../redux/slice/eventSlice";
+import { deleteEvent } from "../../redux/slice/eventSlice";
 
 const EventDetail = () => {
   const { friendId } = useParams();
@@ -59,9 +60,8 @@ const EventDetail = () => {
       dispatch(addEvents({ token, formData, friendId }));
     }
   };
-
-  const handleDelete = () => {
-    alert("boy");
+  const handleDelete = (id) => {
+    dispatch(deleteEvent({ token, id }));
   };
   return (
     <div className="p-10">
@@ -141,7 +141,7 @@ const EventDetail = () => {
                         {event.status}
                       </span>
                       <button
-                        onClick={() => handleDelete(event.id)}
+                        onClick={() => handleDelete(event._id)}
                         className=" px-2 py-1 w-14 border-b-2 border-l-2 border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
                       >
                         Delete

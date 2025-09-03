@@ -8,8 +8,6 @@ const baseURL = "http://localhost:5000";
 export const addEvents = createAsyncThunk(
   "event/addEvents",
   async ({ token, formData, friendId }) => {
-    console.log(token, formData, friendId);
-
     const response = await axios.post(
       `${baseURL}/event/newevent/${friendId}`,
       formData,
@@ -36,24 +34,41 @@ export const allUserEvents = createAsyncThunk(
   }
 );
 
+export const deleteEvent = createAsyncThunk(
+  "event/deleteEvent",
+  async ({ token, id }) => {
+    const response = await axios.delete(`${baseURL}/event/delete/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  }
+);
+
 //slice
 const eventSlice = createSlice({
   name: "event",
   initialState: {
     items: [],
-    events: [],
     error: null,
     loading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(addEvents.fulfilled, (state) => {
-        state.events.push(action.payload);
+      .addCase(addEvents.fulfilled, (state, action) => {
+        state.items.push(action.payload);
         toast.success("New Event Added");
       })
       .addCase(allUserEvents.fulfilled, (state, action) => {
         state.items = action.payload;
+      })
+      .addCase(deleteEvent.fulfilled, (state, action) => {
+        state.items = state.items.filter(
+          (event) => event._id !== action.payload._id
+        );
+        toast.success("Event Deleted.");
       });
   },
 });
