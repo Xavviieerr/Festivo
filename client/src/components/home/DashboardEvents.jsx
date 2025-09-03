@@ -41,51 +41,54 @@ const DashboardEvents = () => {
             <div className="overflow-y-auto rounded mx-9 my-4  px-4 h-83">
               {events[0] ? (
                 <ul>
-                  {events.map((event, index) => (
-                    <div className="flex gap-2">
-                      <Link
-                        key={event.friendId}
-                        to={`/home/events/${event.friendId}`}
-                      >
-                        <li
-                          key={event._id}
-                          className="p-3 grid grid-cols-7
+                  {Object.values(events)
+                    .sort()
+                    .reverse()
+                    .map((event, index) => (
+                      <div className="flex gap-2">
+                        <Link
+                          key={event.friendId}
+                          to={`/home/events/${event.friendId}`}
+                        >
+                          <li
+                            key={event._id}
+                            className="p-3 grid grid-cols-7
                    items-center rounded-b-md shadow-[0_2px_3px_-1px_rgba(0,0,0,0.4)]
                     border-b border-r-gray-200 mb-2"
-                        >
-                          <span className="font-medium">{index + 1}.</span>
-                          <span className="ml-3 text-sm text-gray-700 text-medium">
-                            {event.friendName}
-                          </span>
-                          <span className="text-sm text-gray-600">
-                            {event.eventType}
-                          </span>
-                          <span className="text-sm text-gray-500">
-                            {formatTime(event.datetime)}
-                          </span>
-                          <span className="text-sm text-gray-500">
-                            {formatDate(event.datetime)}
-                          </span>
-                          <span
-                            className={`px-2 py-1 text-xs w-18 rounded-full ${
-                              event.status === "Scheduled"
-                                ? "bg-yellow-100 text-yellow-700"
-                                : "bg-green-100 text-green-700"
-                            }`}
                           >
-                            {event.status}
-                          </span>
-                        </li>
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(event._id)}
-                        className=" px-2 py-1 w-14 border-b-2 border-l-2 mt-4 mb-4
+                            <span className="font-medium">{index + 1}.</span>
+                            <span className="ml-3 text-sm text-gray-700 text-medium">
+                              {event.friendName}
+                            </span>
+                            <span className="text-sm text-gray-600">
+                              {event.eventType}
+                            </span>
+                            <span className="text-sm text-gray-500">
+                              {formatTime(event.datetime)}
+                            </span>
+                            <span className="text-sm text-gray-500">
+                              {formatDate(event.datetime)}
+                            </span>
+                            <span
+                              className={`px-2 py-1 text-xs w-18 rounded-full ${
+                                event.status === "Scheduled"
+                                  ? "bg-yellow-100 text-yellow-700"
+                                  : "bg-green-100 text-green-700"
+                              }`}
+                            >
+                              {event.status}
+                            </span>
+                          </li>
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(event._id)}
+                          className=" px-2 py-1 w-14 border-b-2 border-l-2 mt-4 mb-4
                         border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  ))}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ))}
                 </ul>
               ) : (
                 <span>You do not have any events currently...</span>

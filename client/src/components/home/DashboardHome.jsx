@@ -3,60 +3,25 @@ import { capitalizeFirst } from "../../utils/capitalizeFirst";
 import { useSelector } from "react-redux";
 import { FaCalendar, FaCalendarPlus, FaUserFriends } from "react-icons/fa";
 import { Pie, PieChart, ResponsiveContainer, Tooltip, Cell } from "recharts";
+import { formatDate } from "../../utils/dateFormatter";
+import { formatTime } from "../../utils/timeFormatter";
 
 const DashboardHome = () => {
   const data = useSelector((state) => state.authReducer.authData.user);
+  const events = useSelector((state) => state.eventSlice.items);
+  const friends = useSelector((state) => state.friendSlice.items);
 
-  const COLORS = ["#2a573b", "#6e3a3a"];
+  const totalScheduledEvents = Object.values(events).filter(
+    (event) => event.status !== "Completed"
+  );
+  const totalCompletedEvents = Object.values(events).filter(
+    (event) => event.status !== "Scheduled"
+  );
+
+  const COLORS = ["#9e8635ff", "#41664fff"];
   const data01 = [
-    { name: "Group A", value: 400 },
-    { name: "Group B", value: 300 },
-  ];
-
-  // Dummy data
-  const events = [
-    {
-      username: "John",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-    {
-      username: "Abdulsalam",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-    {
-      username: "John",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-    {
-      username: "John",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-    {
-      username: "John",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-    {
-      username: "John",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
+    { name: "Scheduled", value: totalScheduledEvents.length },
+    { name: "Completed", value: totalCompletedEvents.length },
   ];
 
   return (
@@ -86,7 +51,9 @@ const DashboardHome = () => {
             </div>
           </div>
 
-          <div className="font-bold text-3xl text-gray-600">256</div>
+          <div className="font-bold text-3xl text-gray-600">
+            {friends ? `${friends.length}` : "256"}
+          </div>
         </div>
         <div
           className="p-6 px-5 rounded shadow-[2px_-2px_6px_-1px_rgba(0,0,0,0.3)]
@@ -102,7 +69,9 @@ const DashboardHome = () => {
             </div>
           </div>
 
-          <div className="font-bold text-3xl text-green-700">500</div>
+          <div className="font-bold text-3xl text-green-700">
+            {events ? `${totalCompletedEvents.length}` : "500"}
+          </div>
         </div>
 
         <div
@@ -115,11 +84,13 @@ const DashboardHome = () => {
               size={27}
             />
             <div className="font-medium text-gray-400 mt-2 italic">
-              Total Upcoming Events
+              Total Scheduled Events
             </div>
           </div>
 
-          <div className="font-bold text-3xl text-yellow-700">340</div>
+          <div className="font-bold text-3xl text-yellow-700">
+            {events ? `${totalScheduledEvents.length}` : "340"}
+          </div>
         </div>
       </div>
       <div className="flex-[4] flex ">
@@ -129,31 +100,38 @@ const DashboardHome = () => {
           </div>
           <div className="border-t border-gray-200">
             <ul className="max-h-50 overflow-y-auto mx-5 my-2 text-gray-500 px-3 text-sm">
-              {events.map((event, index) => (
-                <li
-                  key={index}
-                  className="p-3 grid grid-cols-6
+              {Object.values(events)
+                .sort()
+                .reverse()
+                .map((event, index) => (
+                  <li
+                    key={index}
+                    className="p-3 grid grid-cols-6
                    items-center rounded-b-md shadow-[0_2px_3px_-1px_rgba(0,0,0,0.4)]
                     border-b border-r-gray-200 mb-2"
-                >
-                  <span className="font-medium">{index + 1}.</span>
-                  <span className="ml-3">{event.username}</span>
-                  <span className="text-sm text-gray-600">
-                    {event.eventType}
-                  </span>
-                  <span className="text-sm text-gray-500">{event.time}</span>
-                  <span className="text-sm text-gray-500">{event.date}</span>
-                  <span
-                    className={`px-2 py-1 text-xs rounded-full ${
-                      event.status === "Scheduled"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : "bg-green-100 text-green-700"
-                    }`}
                   >
-                    {event.status}
-                  </span>
-                </li>
-              ))}
+                    <span className="font-medium">{index + 1}.</span>
+                    <span className="ml-3">{event.friendName}</span>
+                    <span className="text-sm text-gray-600">
+                      {event.eventType}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {formatTime(event.datetime)}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {formatDate(event.datetime)}
+                    </span>
+                    <span
+                      className={`px-2 py-1 text-xs rounded-full ${
+                        event.status === "Scheduled"
+                          ? "bg-yellow-100 text-yellow-700"
+                          : "bg-green-100 text-green-700"
+                      }`}
+                    >
+                      {event.status}
+                    </span>
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
