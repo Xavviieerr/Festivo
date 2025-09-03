@@ -1,55 +1,25 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import Logo from "../../assets/logo2.png";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { formatDate } from "../../utils/dateFormatter";
+import { formatTime } from "../../utils/timeFormatter";
+import { capitalizeFirst } from "../../utils/capitalizeFirst";
+import { addEvents } from "../../redux/slice/eventSlice";
 
 const EventDetail = () => {
-  const { eventsId } = useParams();
+  const { friendId } = useParams();
+  const users = useSelector((state) => state.friendSlice.items);
+  const user = Object.values(users).find((user) => user._id === friendId);
+  const token = useSelector((state) => state.authReducer.authData.token);
+  const allEvents = useSelector((state) => state.eventSlice.items);
+  const events = Object.values(allEvents).filter(
+    (event) => event.friendId.toString() === friendId
+  );
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
-  const events = [
-    {
-      id: 1,
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Completed",
-    },
-    {
-      id: 2,
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-    {
-      id: 3,
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Completed",
-    },
-    {
-      id: 4,
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-    {
-      id: 5,
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Completed",
-    },
-    {
-      id: 6,
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-  ];
+
   const [formData, setFormData] = useState({
     datetime: "",
     eventType: "",
@@ -86,8 +56,7 @@ const EventDetail = () => {
         datetime: "",
         eventType: "",
       });
-      console.log("Event created:", formData);
-      alert("✅ Event created successfully!");
+      dispatch(addEvents({ token, formData, friendId }));
     }
   };
 
@@ -107,9 +76,19 @@ const EventDetail = () => {
                 className="h-31 w-31 rounded-full object-cover"
               />
               <ul className="mt-10 ">
-                <li className="font-medium text-2xl">John Doe</li>
-                <li className="font-medium">Brother</li>
-                <li className="text-sm text-gray-500">example@gmail.com</li>
+                <li className="font-medium text-2xl">
+                  {user
+                    ? `${capitalizeFirst(user.firstname)} ${capitalizeFirst(
+                        user.lastname
+                      )}`
+                    : "John Doe"}
+                </li>
+                <li className="font-medium">
+                  {user ? `${user.relationship}` : "Brother"}
+                </li>
+                <li className="text-sm text-gray-500">
+                  {user ? `${user.email}` : "example@email.com"}
+                </li>
               </ul>
             </div>
             <div>
@@ -147,10 +126,10 @@ const EventDetail = () => {
                         {event.eventType}
                       </span>
                       <span className="text-sm text-gray-500">
-                        {event.time}
+                        {formatTime(event.datetime)}
                       </span>
                       <span className="text-sm text-gray-500">
-                        {event.date}
+                        {formatDate(event.datetime)}
                       </span>
                       <span
                         className={`px-2 py-1 text-xs w-18 rounded-full ${

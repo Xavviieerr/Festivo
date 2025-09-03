@@ -1,58 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { allUserEvents } from "../../redux/slice/eventSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { formatDate } from "../../utils/dateFormatter";
+import { formatTime } from "../../utils/timeFormatter";
 
 const DashboardEvents = () => {
-  // Dummy data
-  const events = [
-    {
-      id: 1,
-      username: "John",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Completed",
-    },
-    {
-      id: 2,
-      username: "Abdulsalam",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-    {
-      id: 3,
-      username: "John",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Completed",
-    },
-    {
-      id: 4,
-      username: "John",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-    {
-      id: 5,
-      username: "John",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Completed",
-    },
-    {
-      id: 6,
-      username: "John",
-      eventType: "Birthday",
-      date: "2025-08-23",
-      time: "09:00",
-      status: "Scheduled",
-    },
-  ];
+  const token = useSelector((state) => state.authReducer.authData.token);
+  const events = useSelector((state) => state.eventSlice.items);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(allUserEvents(token));
+  }, [token, dispatch]);
+
   const handleDelete = (event) => {
     alert("boy");
   };
@@ -80,25 +41,28 @@ const DashboardEvents = () => {
               {events[0] ? (
                 <ul>
                   {events.map((event, index) => (
-                    <Link key={event.id} to={`/home/events/${event.id}`}>
+                    <Link
+                      key={event.friendId}
+                      to={`/home/events/${event.friendId}`}
+                    >
                       <li
-                        key={event.id}
+                        key={event._id}
                         className="p-3 grid grid-cols-7
                    items-center rounded-b-md shadow-[0_2px_3px_-1px_rgba(0,0,0,0.4)]
                     border-b border-r-gray-200 mb-2"
                       >
                         <span className="font-medium">{index + 1}.</span>
                         <span className="ml-3 text-sm text-gray-700 text-medium">
-                          {event.username}
+                          {event.friendName}
                         </span>
                         <span className="text-sm text-gray-600">
                           {event.eventType}
                         </span>
                         <span className="text-sm text-gray-500">
-                          {event.time}
+                          {formatTime(event.datetime)}
                         </span>
                         <span className="text-sm text-gray-500">
-                          {event.date}
+                          {formatDate(event.datetime)}
                         </span>
                         <span
                           className={`px-2 py-1 text-xs w-18 rounded-full ${

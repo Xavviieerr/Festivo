@@ -12,9 +12,16 @@ const eventSchema = mongoose.Schema(
       ref: "Friend",
       required: true,
     },
-    type: {
+    friendName: {
       type: String,
-      enum: ["birthday", "anniversary", "custom"],
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    },
+    eventType: {
+      type: String,
       required: true,
     },
     datetime: {

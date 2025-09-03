@@ -9,7 +9,7 @@ import {
 
 const router = express.Router();
 
-router.post("/newevent", authenticateToken, addEvent);
+router.post("/newevent/:id", authenticateToken, addEvent);
 router.get("/allevents", authenticateToken, allEvents);
 router.get("/userevent/:id", authenticateToken, userEvent);
 router.delete("/deleteevent/:id", authenticateToken, deleteEvent);
