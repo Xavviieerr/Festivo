@@ -7,6 +7,7 @@ import { formatTime } from "../../utils/timeFormatter";
 import { capitalizeFirst } from "../../utils/capitalizeFirst";
 import { addEvents } from "../../redux/slice/eventSlice";
 import { deleteEvent } from "../../redux/slice/eventSlice";
+import ConfirmDialog from "../ConfirmDialog";
 
 const EventDetail = () => {
   const { friendId } = useParams();
@@ -140,12 +141,11 @@ const EventDetail = () => {
                       >
                         {event.status}
                       </span>
-                      <button
-                        onClick={() => handleDelete(event._id)}
-                        className=" px-2 py-1 w-14 border-b-2 border-l-2 border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
-                      >
-                        Delete
-                      </button>
+                      <ConfirmDialog
+                        triggerText="Delete"
+                        message="Are you sure you want to delete this event?"
+                        onConfirm={() => handleDelete(event._id)}
+                      />
                     </li>
                   ))}
                 </ul>

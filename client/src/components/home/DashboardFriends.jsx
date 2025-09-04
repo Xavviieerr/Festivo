@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { fetchFriends } from "../../redux/slice/friendSlice";
 import { useEffect } from "react";
 import { deleteFriend } from "../../redux/slice/friendSlice";
+import ConfirmDialog from "../ConfirmDialog";
 
 const DashboardFriends = () => {
   const token = useSelector((state) => state.authReducer.authData.token);
@@ -89,13 +90,11 @@ const DashboardFriends = () => {
                             </span>
                           </li>
                         </Link>
-                        <button
-                          onClick={() => handleDelete(friend._id)}
-                          className=" px-2 py-1 w-14 border-b-2 border-l-2 mb-4 mt-5
-                      border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
-                        >
-                          Delete
-                        </button>
+                        <ConfirmDialog
+                          triggerText="Delete"
+                          message={`Are you sure you want to remove ${friend.firstname}?`}
+                          onConfirm={() => handleDelete(friend._id)}
+                        />
                       </div>
                     ))}
                 </ul>

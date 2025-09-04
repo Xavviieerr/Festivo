@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { formatDate } from "../../utils/dateFormatter";
 import { formatTime } from "../../utils/timeFormatter";
 import { deleteEvent } from "../../redux/slice/eventSlice";
+import ConfirmDialog from "../ConfirmDialog";
 
 const DashboardEvents = () => {
   const token = useSelector((state) => state.authReducer.authData.token);
@@ -80,13 +81,11 @@ const DashboardEvents = () => {
                             </span>
                           </li>
                         </Link>
-                        <button
-                          onClick={() => handleDelete(event._id)}
-                          className=" px-2 py-1 w-14 border-b-2 border-l-2 mt-4 mb-4
-                        border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
-                        >
-                          Delete
-                        </button>
+                        <ConfirmDialog
+                          triggerText="Delete"
+                          message="Are you sure you want to delete this event?"
+                          onConfirm={() => handleDelete(event._id)}
+                        />
                       </div>
                     ))}
                 </ul>
