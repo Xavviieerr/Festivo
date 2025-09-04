@@ -6,6 +6,7 @@ import AuthRoute from "./Routes/AuthRoute.js";
 import FriendRoute from "./Routes/FriendRoute.js";
 import EventRoute from "./Routes/EventRoute.js";
 import { MongoClient, ServerApiVersion } from "mongodb";
+import rateLimit from "express-rate-limit";
 
 //express app initialization
 const app = express();
@@ -18,15 +19,22 @@ app.use(express.urlencoded({ extended: true }));
 //Environment variables
 dotenv.config();
 
-//routes
-app.use("/auth", AuthRoute);
-app.use("/friend", FriendRoute);
-app.use("/event", EventRoute);
+const authLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 100,
+  message: "Too many requests, please try again later.",
+});
 
-// , {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//     }
+const generalLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 50,
+  message: "Too many requests. Please try again later.",
+});
+//routes
+app.use("/auth", authLimiter, AuthRoute);
+app.use("/friend", generalLimiter, FriendRoute);
+app.use("/event", generalLimiter, EventRoute);
+
 //Database
 const connectDB = async () => {
   try {
