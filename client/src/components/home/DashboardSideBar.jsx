@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext } from "react";
-import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
+import { LuArrowLeft, LuArrowRight, LuLogOut } from "react-icons/lu";
 import Logo from "../../assets/logo2.png";
+import LogOutButton from "../LogOutButton";
 
 const SidebarContext = createContext();
 export const useSidebar = () => useContext(SidebarContext);
@@ -39,10 +40,13 @@ const DashboardSideBar = ({ children }) => {
 
           {/* botton section */}
           <div
-            className={`shadow-[0_-4px_4px_-2px_rgba(0,0,0,0.3)] flex justify-between items-center p-3 overflow-hidden transition-all ${
+            className={`shadow-[0_-4px_4px_-2px_rgba(0,0,0,0.3)] flex flex-col justify-between items-center p-3 overflow-hidden transition-all ${
               expanded ? "w-[250px] " : "w-0 hidden"
             }`}
           >
+            <div className="flex items-center justify-center">
+              <LogOutButton />
+            </div>
             <a
               className="text-xs text-gray-400 font-bold"
               href="https://github.com/Xavviieerr"

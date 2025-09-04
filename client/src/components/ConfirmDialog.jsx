@@ -1,6 +1,12 @@
 import { useState } from "react";
+import { LuLogOut } from "react-icons/lu";
 
-export default function ConfirmDialog({ triggerText, message, onConfirm }) {
+export default function ConfirmDialog({
+  triggerText,
+  message,
+  onConfirm,
+  buttonType,
+}) {
   const [open, setOpen] = useState(false);
 
   const handleConfirm = () => {
@@ -11,13 +17,26 @@ export default function ConfirmDialog({ triggerText, message, onConfirm }) {
   return (
     <>
       {/* Trigger button */}
-      <button
-        onClick={() => setOpen(true)}
-        className=" px-2 py-1 w-14 border-b-2 border-l-2 mt-4 mb-4
+      {!buttonType && (
+        <button
+          onClick={() => setOpen(true)}
+          className=" px-2 py-1 w-14 border-b-2 border-l-2 mt-4 mb-4
         border-[#b45639ff] hover:bg-[#b45639ff] text-gray-700 rounded text-xs "
-      >
-        {triggerText}
-      </button>
+        >
+          {triggerText}
+        </button>
+      )}
+
+      {buttonType === "logout" && (
+        <button
+          onClick={() => setOpen(true)}
+          className=" flex-1 mt-4 px-3
+        relative flex items-center gap-2 p-2 mt-2 rounded-md cursor-pointer 
+        font-medium transition-colors text-gray-700 text-medium hover:border-1 hover:bg-gray-300 hover:text-white"
+        >
+          {<LuLogOut />} Logout
+        </button>
+      )}
 
       {/* Modal */}
       {open && (

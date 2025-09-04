@@ -37,3 +37,7 @@ export const updateDetails = (formData, token) => async (dispatch) => {
     dispatch({ type: "AUTH_UPDATE_DETAILS_FAILED" });
   }
 };
+
+export const logOut = () => (dispatch) => {
+  dispatch({ type: "AUTH_LOG_OUT" });
+};

@@ -3,12 +3,7 @@ import DashboardSideBar from "../../components/home/DashboardSideBar";
 import SideBarItem from "../../components/home/SideBarItem";
 import DashboardTopBar from "../../components/home/DashboardTopBar";
 import { useSelector } from "react-redux";
-import {
-  LuCalendar,
-  LuLayoutDashboard,
-  LuLogOut,
-  LuUser,
-} from "react-icons/lu";
+import { LuCalendar, LuLayoutDashboard, LuUser } from "react-icons/lu";
 import { FaUserFriends } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
 
@@ -30,7 +25,6 @@ const Dashboard = () => {
             text="Friends"
             to="/home/friends"
           />
-          <SideBarItem icon={<LuLogOut />} text="Logout" />
         </DashboardSideBar>
         <div className="grid grid-rows-[auto_1fr]">
           {/* top nav bar */}
