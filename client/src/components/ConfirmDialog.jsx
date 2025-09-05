@@ -30,7 +30,7 @@ export default function ConfirmDialog({
       {buttonType === "logout" && (
         <button
           onClick={() => setOpen(true)}
-          className=" flex-1 mt-4 px-3
+          className=" flex-1 px-3
         relative flex items-center gap-2 p-2 mt-2 rounded-md cursor-pointer 
         font-medium transition-colors text-gray-700 text-medium hover:border-1 hover:bg-gray-300 hover:text-white"
         >

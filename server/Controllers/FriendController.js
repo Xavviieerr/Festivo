@@ -9,6 +9,7 @@ export const addFriend = async (req, res) => {
   try {
     const alreadyRegistered = await FriendModel.findOne({
       email: userFriend.email,
+      friendId: user.id,
     });
 
     if (alreadyRegistered) {

@@ -69,13 +69,23 @@ const friendsSlice = createSlice({
       .addCase(fetchFriends.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+        toast.error(action.error.message);
       })
 
       //add friend cases
       .addCase(addFriend.fulfilled, (state, action) => {
+        state.loading = false;
         state.items.push(action.payload);
         toast.success("Friend Added!");
       })
+      .addCase(addFriend.pending, (state) => {
+        (state.loading = true), (state.error = null);
+      })
+      .addCase(addFriend.rejected, (state, action) => {
+        (state.loading = false), (state.error = action.error.message);
+        toast.error(action.error.message);
+      })
+
       //delete friend cases
       .addCase(deleteFriend.fulfilled, (state, action) => {
         (state.loading = false),
@@ -83,6 +93,13 @@ const friendsSlice = createSlice({
             (friend) => friend._id !== action.payload._id
           ));
         toast.success("Friend Deleted.");
+      })
+      .addCase(deleteFriend.pending, (state) => {
+        (state.loading = true), (state.error = null);
+      })
+      .addCase(deleteFriend.rejected, (state, action) => {
+        (state.loading = false), (state.error = action.error.message);
+        toast.error(action.error.message);
       });
   },
 });

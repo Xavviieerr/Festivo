@@ -56,19 +56,51 @@ const eventSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    //create events
     builder
       .addCase(addEvents.fulfilled, (state, action) => {
+        state.loading = false;
         state.items.push(action.payload);
-        toast.success("New Event Added");
+        toast.success("New Event Created! 🎉");
       })
+      .addCase(addEvents.pending, (state) => {
+        (state.loading = true), (state.error = null);
+      })
+      .addCase(addEvents.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        toast.error(action.error.message);
+      })
+
+      //get all user events
       .addCase(allUserEvents.fulfilled, (state, action) => {
+        state.loading = false;
         state.items = action.payload;
       })
+      .addCase(allUserEvents.pending, (state) => {
+        (state.loading = true), (state.error = null);
+      })
+      .addCase(allUserEvents.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        toast.error(action.error.message);
+      })
+
+      //Delete event
       .addCase(deleteEvent.fulfilled, (state, action) => {
+        state.loading = false;
         state.items = state.items.filter(
           (event) => event._id !== action.payload._id
         );
         toast.success("Event Deleted.");
+      })
+      .addCase(deleteEvent.pending, (state) => {
+        (state.loading = true), (state.error = null);
+      })
+      .addCase(deleteEvent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        toast.error(action.error.message);
       });
   },
 });

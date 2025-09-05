@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { capitalizeFirst } from "../../utils/capitalizeFirst";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaCalendar, FaCalendarPlus, FaUserFriends } from "react-icons/fa";
 import { Pie, PieChart, ResponsiveContainer, Tooltip, Cell } from "recharts";
 import { formatDate } from "../../utils/dateFormatter";
 import { formatTime } from "../../utils/timeFormatter";
+import { allUserEvents } from "../../redux/slice/eventSlice";
+import { fetchFriends } from "../../redux/slice/friendSlice";
+import { Link } from "react-router-dom";
 
 const DashboardHome = () => {
+  const dispatch = useDispatch();
   const data = useSelector((state) => state.authReducer.authData.user);
   const events = useSelector((state) => state.eventSlice.items);
   const friends = useSelector((state) => state.friendSlice.items);
+  const token = useSelector((state) => state.authReducer.authData.token);
 
   const totalScheduledEvents = Object.values(events).filter(
     (event) => event.status !== "Completed"
@@ -23,6 +28,11 @@ const DashboardHome = () => {
     { name: "Scheduled", value: totalScheduledEvents.length },
     { name: "Completed", value: totalCompletedEvents.length },
   ];
+
+  useEffect(() => {
+    dispatch(allUserEvents(token));
+    dispatch(fetchFriends(token));
+  }, [token, dispatch]);
 
   return (
     <div className="p-8 flex flex-col h-full  gap-3">
@@ -98,68 +108,88 @@ const DashboardHome = () => {
           <div className="m-3 text-2xl font-medium text-gray-700 ">
             Upcoming Events
           </div>
-          <div className="border-t border-gray-200">
-            <ul className="max-h-50 overflow-y-auto mx-5 my-2 text-gray-500 px-3 text-sm">
-              {Object.values(events)
-                .sort()
-                .reverse()
-                .map((event, index) => (
-                  <li
-                    key={index}
-                    className="p-3 grid grid-cols-6
+          <div className="border-t border-gray-200 ">
+            {events[0] ? (
+              <ul className="max-h-50 overflow-y-auto mx-5 my-2 text-gray-500 px-3 text-sm">
+                {Object.values(events)
+                  .sort()
+                  .reverse()
+                  .map((event, index) => (
+                    <li
+                      key={index}
+                      className="p-3 grid grid-cols-6
                    items-center rounded-b-md shadow-[0_2px_3px_-1px_rgba(0,0,0,0.4)]
                     border-b border-r-gray-200 mb-2"
-                  >
-                    <span className="font-medium">{index + 1}.</span>
-                    <span className="ml-3">{event.friendName}</span>
-                    <span className="text-sm text-gray-600">
-                      {event.eventType}
-                    </span>
-                    <span className="text-sm text-gray-500">
-                      {formatTime(event.datetime)}
-                    </span>
-                    <span className="text-sm text-gray-500">
-                      {formatDate(event.datetime)}
-                    </span>
-                    <span
-                      className={`px-2 py-1 text-xs rounded-full ${
-                        event.status === "Scheduled"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-green-100 text-green-700"
-                      }`}
                     >
-                      {event.status}
-                    </span>
-                  </li>
-                ))}
-            </ul>
+                      <span className="font-medium">{index + 1}.</span>
+                      <span className="ml-3">{event.friendName}</span>
+                      <span className="text-sm text-gray-600">
+                        {event.eventType}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {formatTime(event.datetime)}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {formatDate(event.datetime)}
+                      </span>
+                      <span
+                        className={`px-2 py-1 text-xs rounded-full ${
+                          event.status === "Scheduled"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-green-100 text-green-700"
+                        }`}
+                      >
+                        {event.status}
+                      </span>
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              <div>
+                <span className="text-sm text-gray-400">
+                  You do not have any events currently
+                </span>
+                <Link to={`/home/newfriend`}>
+                  <button
+                    className="py-2 px-3 border-b-1 border-r-1 mt-2 
+                              border-green-700 text-gray-500 text-medium font-bold transition-color rounded-xl hover:bg-green-100 "
+                  >
+                    Add Friend
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex-[2] m-4 shadow-[4px_0_5px_-1px_rgba(0,0,0,0.3)]">
           <div className="m-3 text-2xl font-medium text-gray-700 border-b border-gray-200 pb-2">
             Chart
           </div>
-          <ResponsiveContainer width="100%" height="80%">
-            <PieChart>
-              <Pie
-                dataKey="value"
-                isAnimationActive={true}
-                data={data01}
-                cx="50%"
-                cy="50%"
-                outerRadius={70}
-                label
-              >
-                {data01.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+          {events[0] ? (
+            <ResponsiveContainer width="100%" height="80%">
+              <PieChart>
+                <Pie
+                  dataKey="value"
+                  isAnimationActive={true}
+                  data={data01}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={70}
+                  label
+                >
+                  {data01.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          ) : (
+            <span className="text-sm text-gray-400">No chart Data</span>
+          )}
         </div>
       </div>
     </div>

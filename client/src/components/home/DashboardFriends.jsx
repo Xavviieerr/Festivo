@@ -5,10 +5,12 @@ import { fetchFriends } from "../../redux/slice/friendSlice";
 import { useEffect } from "react";
 import { deleteFriend } from "../../redux/slice/friendSlice";
 import ConfirmDialog from "../ConfirmDialog";
+import Loader from "../Loader";
 
 const DashboardFriends = () => {
   const token = useSelector((state) => state.authReducer.authData.token);
   const friends = useSelector((state) => state.friendSlice.items);
+  const loading = useSelector((state) => state.friendSlice.loading);
 
   const dispatch = useDispatch();
 
@@ -22,6 +24,7 @@ const DashboardFriends = () => {
   return (
     <div className="p-10">
       <div className="main ">
+        {loading && <Loader />}
         <div className="flex flex-col gap-5">
           <div className="h-auto flex justify-between items-end py-5 px-2 shadow-[0_3px_2px_-1px_rgba(0,0,0,0.4)]">
             <div>
@@ -56,8 +59,8 @@ const DashboardFriends = () => {
             <div className="overflow-y-auto rounded mx-9 my-4  px-4 h-83">
               {friends[0] ? (
                 <ul className="">
-                  {friends
-                    .slice()
+                  {Object.values(friends)
+                    .sort()
                     .reverse()
                     .map((friend, index) => (
                       <div className="flex gap-4 pr-10">
@@ -67,7 +70,7 @@ const DashboardFriends = () => {
                         >
                           <li
                             key={friend._id}
-                            className="p-3 grid grid-cols-6
+                            className="p-3 grid grid-cols-5 
                      items-center rounded-b-md shadow-[0_2px_3px_-1px_rgba(0,0,0,0.4)]
                       border-b border-r-gray-200 mb-2 mr-0"
                           >
@@ -92,7 +95,7 @@ const DashboardFriends = () => {
                         </Link>
                         <ConfirmDialog
                           triggerText="Delete"
-                          message={`Are you sure you want to remove ${friend.firstname}?`}
+                          message={`Are you sure you want to remove ${friend.firstname} and all their events?`}
                           onConfirm={() => handleDelete(friend._id)}
                         />
                       </div>

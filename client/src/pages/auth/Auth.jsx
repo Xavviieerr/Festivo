@@ -4,6 +4,7 @@ import Logo from "../../assets/logo2.png";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, signUp } from "../../redux/actions/AuthAction";
+import Loader from "../../components/Loader";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const Auth = () => {
 
   // validation function
   const validate = () => {
+    setErrors({});
     // declarations
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const passwordRegex =
@@ -57,8 +59,10 @@ const Auth = () => {
     }
 
     //confirmpassword checker
-    if (formData.confirmpassword !== formData.password) {
-      newErrors.confirmpassword = "Password and confirmpassword must match";
+    if (isSignup) {
+      if (formData.confirmpassword !== formData.password) {
+        newErrors.confirmpassword = "Password and confirm password must match";
+      }
     }
     return newErrors;
   };
@@ -66,11 +70,12 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
-
+    const keys = Object.keys(validationErrors);
     if (
-      Object.keys(validationErrors).length === 0 ||
-      (Object.keys(validationErrors).length === 1 &&
-        validationErrors.confirmpassword !== "")
+      keys.length === 0 ||
+      (keys.length === 1 &&
+        keys[0] === "confirmpassword" &&
+        validationErrors.confirmpassword === "")
     ) {
       setErrors({});
       const newFormData = {
@@ -96,6 +101,7 @@ const Auth = () => {
         
         md:w-full md:px-40"
         >
+          {loading && <Loader />}
           {/* festivo`s login page logo */}
           <img
             src={Logo}

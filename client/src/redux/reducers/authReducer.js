@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 const authReducer = (
   state = { authData: null, loading: false, error: false },
   action
@@ -22,6 +23,7 @@ const authReducer = (
         },
       };
       localStorage.setItem("store", JSON.stringify(updatedProfile));
+      toast.success("Upload Successful 🎉");
       return {
         ...state,
         authData: {
@@ -30,6 +32,7 @@ const authReducer = (
         },
       };
     case "AUTH_UPDATE_DETAILS_FAILED":
+      toast.error("Update failed. 😢");
       return { ...state, loading: false, error: true };
     default:
       return state;

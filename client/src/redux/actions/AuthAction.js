@@ -9,8 +9,9 @@ export const logIn = (formData) => async (dispatch) => {
     toast.success("Login Successful! 😊");
   } catch (error) {
     console.log(error);
-    dispatch({ type: "AUTH_FAIL" });
+    toast.error(error.message);
     toast.error(error.response.data);
+    dispatch({ type: "AUTH_FAIL" });
   }
 };
 
@@ -22,12 +23,13 @@ export const signUp = (formData) => async (dispatch) => {
     toast.success("SignUp Successful! 😊");
   } catch (error) {
     console.log(error);
+    toast.error(error.message);
     dispatch({ type: "AUTH_FAIL" });
-    toast.error(error.response.data.message);
   }
 };
 
 export const updateDetails = (formData, token) => async (dispatch) => {
+  dispatch({ type: "AUTH_START" });
   try {
     const { data } = await AuthApi.updateDetails(formData, token);
     dispatch({ type: "AUTH_UPDATE_DETAILS", data: data });

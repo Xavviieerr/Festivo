@@ -6,9 +6,11 @@ import { formatDate } from "../../utils/dateFormatter";
 import { formatTime } from "../../utils/timeFormatter";
 import { deleteEvent } from "../../redux/slice/eventSlice";
 import ConfirmDialog from "../ConfirmDialog";
+import Loader from "../Loader";
 
 const DashboardEvents = () => {
   const token = useSelector((state) => state.authReducer.authData.token);
+  const loading = useSelector((state) => state.eventSlice.loading);
   const events = useSelector((state) => state.eventSlice.items);
   const dispatch = useDispatch();
 
@@ -23,6 +25,7 @@ const DashboardEvents = () => {
   return (
     <div className="p-10">
       <div className="main ">
+        {loading && <Loader />}
         <div className="flex flex-col gap-5">
           <div className="h-auto py-5 px-2 shadow-[0_3px_2px_-1px_rgba(0,0,0,0.4)]">
             <div className="font-bold text-4xl text-gray-700">Events</div>

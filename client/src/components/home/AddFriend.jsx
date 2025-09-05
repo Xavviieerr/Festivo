@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { addFriend } from "../../redux/slice/friendSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Loader from "../Loader";
 
 const AddFriend = () => {
   const token = useSelector((state) => state.authReducer.authData.token);
-
+  const loading = useSelector((state) => state.friendSlice.loading);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [newFriendData, setNewFriendData] = useState({
     firstname: "friday",
-    lastname: "bola",
-    nickname: "faani",
+    lastname: "Muyiwa",
+    nickname: "Dennis",
     relationship: "friend",
-    email: "bolafan@gmail.com",
+    email: "dennisshola@gmail.com",
     tone: "humor",
     humor: "tine",
     length: "long",
@@ -52,7 +55,7 @@ const AddFriend = () => {
     setErrors({});
     if (!validateForm()) return;
     dispatch(addFriend({ newFriendData, token }));
-    <Navigate to={`/home/friends`} />;
+    //navigate("/home/friends");
   };
 
   const handleChange = (e) => {
@@ -66,6 +69,7 @@ const AddFriend = () => {
     <div className="px-30 pt-8 ">
       <div className="h-[550px] shadow-[0px_0px_7px_2px_rgba(0,0,0,0.2)] rounded-xl max-w-[87%] overflow-y-auto">
         <div className="">
+          {loading && <Loader />}
           <div className="h-auto p-4 pt-10 text-gray-800 border-b-2 border-gray-300 ">
             <form onSubmit={handleSubmit}>
               <span className="font-bold text-xl text-gray-600 underline  ">
