@@ -1,4 +1,5 @@
 import FriendModel from "../Models/friendModel.js";
+import EventModel from "../Models/eventModel.js";
 import mongoose from "mongoose";
 
 export const addFriend = async (req, res) => {
@@ -63,13 +64,14 @@ export const deleteFriend = async (req, res) => {
         const deletedUser = await FriendModel.findByIdAndDelete(id);
 
         if (!deletedUser) {
-          return res.status(404).json({ error: "User not found" });
+          return res.status(404).json({ error: "Friend not found" });
         }
+        await EventModel.deleteMany({ friendId: id });
         return res.json(deletedUser);
       }
     }
     if (!foundUser) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "Friend not found" });
     }
   } catch (error) {
     console.log(error);
